@@ -1,9 +1,0 @@
-/home/sergey/qt_projects/client_server/server/build-server-Desktop_Qt_6_4_3_GCC_64bit-Debug/CMakeFiles/server.dir
-/home/sergey/qt_projects/client_server/server/build-server-Desktop_Qt_6_4_3_GCC_64bit-Debug/CMakeFiles/edit_cache.dir
-/home/sergey/qt_projects/client_server/server/build-server-Desktop_Qt_6_4_3_GCC_64bit-Debug/CMakeFiles/rebuild_cache.dir
-/home/sergey/qt_projects/client_server/server/build-server-Desktop_Qt_6_4_3_GCC_64bit-Debug/CMakeFiles/list_install_components.dir
-/home/sergey/qt_projects/client_server/server/build-server-Desktop_Qt_6_4_3_GCC_64bit-Debug/CMakeFiles/install.dir
-/home/sergey/qt_projects/client_server/server/build-server-Desktop_Qt_6_4_3_GCC_64bit-Debug/CMakeFiles/install/local.dir
-/home/sergey/qt_projects/client_server/server/build-server-Desktop_Qt_6_4_3_GCC_64bit-Debug/CMakeFiles/install/strip.dir
-/home/sergey/qt_projects/client_server/server/build-server-Desktop_Qt_6_4_3_GCC_64bit-Debug/CMakeFiles/server_autogen_timestamp_deps.dir
-/home/sergey/qt_projects/client_server/server/build-server-Desktop_Qt_6_4_3_GCC_64bit-Debug/CMakeFiles/server_autogen.dir
