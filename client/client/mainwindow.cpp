@@ -5,11 +5,12 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    ui->setupUi(this);
     socket = new QTcpSocket(this);
-    socket->connectToHost("127.0.0.1", 2323);
+    connect(ui->lineEdit, &QLineEdit::returnPressed, this, &MainWindow::on_Send_button_clicked);
     connect(socket, &QTcpSocket::readyRead, this, &MainWindow::slotReadyRead);
     connect(socket, &QTcpSocket::disconnected, socket, &QTcpSocket::deleteLater);
-    ui->setupUi(this);
+
 }
 
 MainWindow::~MainWindow()
@@ -23,18 +24,27 @@ void MainWindow::slotReadyRead()
     QDataStream in(socket);
     in.setVersion(QDataStream::Qt_6_4);
     if(in.status()==QDataStream::Ok){
+        Data.clear();
         qDebug() << "Read...";
         QString read_string;
         in >> read_string;
         ui->textBrowser->insertPlainText(read_string + "\n");
-    }
-    else{
-        qDebug() << "Readind error...";
-    }
+}
 }
 
 
-void MainWindow::on_pushButton_clicked()
+
+void MainWindow::SendToServer(QString send_string)
+{
+    Data.clear();
+    QDataStream out(&Data, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_6_4);
+    out << ui->lineEditSelect->text() << send_string;
+    socket->write(Data);
+}
+
+
+void MainWindow::on_Send_button_clicked()
 {
     if(ui->lineEdit->text() != "\0"){
     ui->textBrowser->setAlignment(Qt::AlignRight);
@@ -44,12 +54,17 @@ void MainWindow::on_pushButton_clicked()
     }
 }
 
-void MainWindow::SendToServer(QString send_string)
+
+void MainWindow::on_Connect_button_clicked()
 {
+    Data.clear();
+    socket->connectToHost("127.0.0.1", 2323);
     Data.clear();
     QDataStream out(&Data, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_6_4);
-    out << send_string;
+    out << ui->lineEditUserName->text();
     socket->write(Data);
+//    socket->connectToHost("127.0.0.1", 2323);
+
 }
 
