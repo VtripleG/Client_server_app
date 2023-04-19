@@ -16,10 +16,12 @@ class MainWindow : public QMainWindow
 public:
     QTcpSocket *socket;
     QTcpSocket *buff_socket;
+    QString geter_name;
 
     QByteArray Data;
     int massege_flag = 0;
     QVector <QTcpSocket*> sockets;
+    QVector <QString> sender_names;
 
     void SendToServer(QString send_string);
 
@@ -29,11 +31,12 @@ public slots:
     void slotReadyRead();
 
 private slots:
-    void on_pushButton_clicked();
 
     void on_Send_button_clicked();
 
     void on_Connect_button_clicked();
+
+    void on_Select_button_clicked();
 
 private:
     Ui::MainWindow *ui;

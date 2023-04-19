@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     socket = new QTcpSocket(this);
     connect(ui->lineEdit, &QLineEdit::returnPressed, this, &MainWindow::on_Send_button_clicked);
+    connect(ui->lineEditSelect, &QLineEdit::returnPressed, this, &MainWindow::on_Select_button_clicked);
     connect(socket, &QTcpSocket::readyRead, this, &MainWindow::slotReadyRead);
     connect(socket, &QTcpSocket::disconnected, socket, &QTcpSocket::deleteLater);
 
@@ -27,8 +28,27 @@ void MainWindow::slotReadyRead()
         Data.clear();
         qDebug() << "Read...";
         QString read_string;
-        in >> read_string;
-        ui->textBrowser->insertPlainText(read_string + "\n");
+        QString sender_name;
+        in >> sender_name >> read_string;
+        if(!sender_names.isEmpty())
+        {
+            bool flag = false;
+            for(const auto &item: sender_names){
+                if(item == sender_name)
+                    flag = true;
+            }
+            if(!flag)
+            {
+                sender_names.push_back(sender_name);
+                ui->textBrowser_names_list->append(sender_name);
+            }
+
+        }
+        else{
+            sender_names.push_back(sender_name);
+            ui->textBrowser_names_list->append(sender_name);
+        }
+        ui->textBrowser->insertPlainText(sender_name + ": " + read_string + "\n");
 }
 }
 
@@ -39,7 +59,7 @@ void MainWindow::SendToServer(QString send_string)
     Data.clear();
     QDataStream out(&Data, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_6_4);
-    out << ui->lineEditSelect->text() << send_string;
+    out << geter_name << send_string;
     socket->write(Data);
 }
 
@@ -66,5 +86,11 @@ void MainWindow::on_Connect_button_clicked()
     socket->write(Data);
 //    socket->connectToHost("127.0.0.1", 2323);
 
+}
+
+
+void MainWindow::on_Select_button_clicked()
+{
+    geter_name = ui->lineEditSelect->text();
 }
 

@@ -10,43 +10,6 @@ Server::Server()
     }
 }
 
-void Server::SendToClient(QString send_string)
-{
-    Data.clear();
-    QDataStream out(&Data, QIODevice::WriteOnly);
-    out.setVersion(QDataStream::Qt_6_4);
-    out << send_string;
-    for (int i = 0; i < users.size(); i++)
-    {
-        if(end_adress == users[i].Name)
-            users[i].Socket->write(Data);
-    }
-//    socket->write(Data);
-
-
-}
-
-//void Server::SendSockets()
-//{
-//    Data.clear();
-//    QDataStream out(&Data, QIODevice::WriteOnly);
-//    out.setVersion(QDataStream::Qt_6_4);
-//    massege_flag = 1; //1 - socket 2-текстовое сообщение
-//    for(int i = 0; i < sockets.size(); i++)
-//        for (int j = 0; j < sockets.size(); j++)
-//        {
-//        out << massege_flag << sockets[j];
-//        sockets[i]->write(Data);
-//        }
-
-//}
-
-void Server::slotAutorisation()
-{
-    auth_flag = 1;
-
-}
-
 void Server::incomingConnection(qintptr socketDescriptor)
 {
     socket = new QTcpSocket;
@@ -57,10 +20,18 @@ void Server::incomingConnection(qintptr socketDescriptor)
     sockets.push_back(socket);
 }
 
+void Server::slotAutorisation()
+{
+    auth_flag = 1;
+
+}
+
 void Server::slotReadyRead()
 {
     if (auth_flag == 0){
+
         socket = (QTcpSocket*)sender();
+
         QDataStream in(socket);
         in.setVersion(QDataStream::Qt_6_4);
         if(in.status()==QDataStream::Ok){
@@ -83,12 +54,28 @@ void Server::slotReadyRead()
             QString read_string;
             in >> read_string;
             users.push_back(User(read_string, socket));
-            qDebug() << users[0].Name;
-            qDebug() << users[0].Socket;
     }
         else{qDebug() << "Readind AUTH error...";}
         auth_flag = 0;
 
     }
 
+}
+
+void Server::SendToClient(QString send_string)
+{
+    Data.clear();
+    for(const auto &item: users)
+    {
+        if(item.Socket == socket)
+            sender_user = item;
+    }
+    QDataStream out(&Data, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_6_4);
+    out << sender_user.Name << send_string;
+    for (int i = 0; i < users.size(); i++)
+    {
+        if(end_adress == users[i].Name)
+            users[i].Socket->write(Data);
+    }
 }

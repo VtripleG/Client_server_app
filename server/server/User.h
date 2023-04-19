@@ -10,6 +10,7 @@ public:
     QTcpSocket * Socket;
 
     User(QString Name, QTcpSocket * Socket);
+    User();
 };
 
 #endif // USER_H

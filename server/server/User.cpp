@@ -6,3 +6,8 @@ User::User(QString Name, QTcpSocket * Socket)
     this->Name = Name;
     this->Socket = Socket;
 }
+
+User::User()
+{
+
+}

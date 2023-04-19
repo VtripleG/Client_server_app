@@ -13,6 +13,7 @@ public:
     QTcpSocket *socket;
     QVector <QTcpSocket*> sockets;
     QVector <User> users;
+    User sender_user;
     QString end_adress;
     int massege_flag = 0;
     int auth_flag;

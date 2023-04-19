@@ -17,7 +17,7 @@
    <widget class="QLineEdit" name="lineEdit">
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>320</x>
       <y>520</y>
       <width>281</width>
       <height>25</height>
@@ -27,9 +27,9 @@
    <widget class="QTextBrowser" name="textBrowser">
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>320</x>
       <y>150</y>
-      <width>591</width>
+      <width>381</width>
       <height>351</height>
      </rect>
     </property>
@@ -37,7 +37,7 @@
    <widget class="QPushButton" name="Send_button">
     <property name="geometry">
      <rect>
-      <x>440</x>
+      <x>610</x>
       <y>520</y>
       <width>89</width>
       <height>25</height>
@@ -50,9 +50,9 @@
    <widget class="QLineEdit" name="lineEditUserName">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>20</y>
-      <width>301</width>
+      <x>320</x>
+      <y>30</y>
+      <width>281</width>
       <height>25</height>
      </rect>
     </property>
@@ -60,8 +60,8 @@
    <widget class="QPushButton" name="Connect_button">
     <property name="geometry">
      <rect>
-      <x>450</x>
-      <y>20</y>
+      <x>610</x>
+      <y>30</y>
       <width>89</width>
       <height>25</height>
      </rect>
@@ -73,9 +73,9 @@
    <widget class="QLineEdit" name="lineEditSelect">
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>320</x>
       <y>90</y>
-      <width>321</width>
+      <width>281</width>
       <height>25</height>
      </rect>
     </property>
@@ -83,14 +83,27 @@
    <widget class="QPushButton" name="Select_button">
     <property name="geometry">
      <rect>
-      <x>460</x>
-      <y>100</y>
+      <x>610</x>
+      <y>90</y>
       <width>89</width>
       <height>25</height>
      </rect>
     </property>
     <property name="text">
      <string>Select</string>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="textBrowser_names_list">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>30</y>
+      <width>256</width>
+      <height>511</height>
+     </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>
