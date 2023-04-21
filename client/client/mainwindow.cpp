@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->lineEditSelect, &QLineEdit::returnPressed, this, &MainWindow::on_Select_button_clicked);
     connect(socket, &QTcpSocket::readyRead, this, &MainWindow::slotReadyRead);
     connect(socket, &QTcpSocket::disconnected, socket, &QTcpSocket::deleteLater);
-
+    connect(ui->names_list, &QListWidget::itemClicked, this, &MainWindow::slotSelectListItem);
 }
 
 MainWindow::~MainWindow()
@@ -40,16 +40,24 @@ void MainWindow::slotReadyRead()
             if(!flag)
             {
                 sender_names.push_back(sender_name);
-                ui->textBrowser_names_list->append(sender_name);
+                ui->names_list->addItem(sender_name);
             }
 
         }
         else{
             sender_names.push_back(sender_name);
-            ui->textBrowser_names_list->append(sender_name);
+            ui->names_list->addItem(sender_name);
         }
         ui->textBrowser->insertPlainText(sender_name + ": " + read_string + "\n");
+    }
 }
+
+void MainWindow::slotSelectListItem()
+{
+    geter_name = ui->names_list->currentItem()->text();
+    ui->lineEditSelect->clear();
+    ui->lineEdit->setFocus();
+//    ui->lineEditSelect->setText(ui->names_list->currentItem());
 }
 
 
@@ -84,13 +92,29 @@ void MainWindow::on_Connect_button_clicked()
     out.setVersion(QDataStream::Qt_6_4);
     out << ui->lineEditUserName->text();
     socket->write(Data);
-//    socket->connectToHost("127.0.0.1", 2323);
-
 }
 
 
 void MainWindow::on_Select_button_clicked()
 {
     geter_name = ui->lineEditSelect->text();
+    if(!sender_names.isEmpty())
+    {
+        bool flag = false;
+        for(const auto &item: sender_names){
+            if(item == geter_name)
+                flag = true;
+        }
+        if(!flag)
+        {
+            sender_names.push_back(geter_name);
+            ui->names_list->addItem(geter_name);
+        }
+
+    }
+    else{
+        sender_names.push_back(geter_name);
+        ui->names_list->addItem(geter_name);
+    }
 }
 

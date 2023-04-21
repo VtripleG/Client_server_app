@@ -29,6 +29,7 @@ public:
     ~MainWindow();
 public slots:
     void slotReadyRead();
+    void slotSelectListItem();
 
 private slots:
 
@@ -37,6 +38,7 @@ private slots:
     void on_Connect_button_clicked();
 
     void on_Select_button_clicked();
+
 
 private:
     Ui::MainWindow *ui;

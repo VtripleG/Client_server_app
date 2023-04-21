@@ -18,7 +18,7 @@
     <property name="geometry">
      <rect>
       <x>320</x>
-      <y>520</y>
+      <y>510</y>
       <width>281</width>
       <height>25</height>
      </rect>
@@ -38,7 +38,7 @@
     <property name="geometry">
      <rect>
       <x>610</x>
-      <y>520</y>
+      <y>510</y>
       <width>89</width>
       <height>25</height>
      </rect>
@@ -93,17 +93,14 @@
      <string>Select</string>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="textBrowser_names_list">
+   <widget class="QListWidget" name="names_list">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>40</x>
       <y>30</y>
       <width>256</width>
       <height>511</height>
      </rect>
-    </property>
-    <property name="readOnly">
-     <bool>true</bool>
     </property>
    </widget>
   </widget>
