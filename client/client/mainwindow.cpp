@@ -60,8 +60,6 @@ void MainWindow::slotSelectListItem()
 //    ui->lineEditSelect->setText(ui->names_list->currentItem());
 }
 
-
-
 void MainWindow::SendToServer(QString send_string)
 {
     Data.clear();
@@ -70,7 +68,6 @@ void MainWindow::SendToServer(QString send_string)
     out << geter_name << send_string;
     socket->write(Data);
 }
-
 
 void MainWindow::on_Send_button_clicked()
 {
@@ -82,7 +79,6 @@ void MainWindow::on_Send_button_clicked()
     }
 }
 
-
 void MainWindow::on_Connect_button_clicked()
 {
     Data.clear();
@@ -93,7 +89,6 @@ void MainWindow::on_Connect_button_clicked()
     out << ui->lineEditUserName->text();
     socket->write(Data);
 }
-
 
 void MainWindow::on_Select_button_clicked()
 {
@@ -116,5 +111,5 @@ void MainWindow::on_Select_button_clicked()
         sender_names.push_back(geter_name);
         ui->names_list->addItem(geter_name);
     }
+    ui->lineEdit->setFocus();
 }
-
