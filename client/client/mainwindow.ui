@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>stud_mas</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLineEdit" name="lineEdit">
@@ -25,16 +25,6 @@
     </property>
     <property name="text">
      <string/>
-    </property>
-   </widget>
-   <widget class="QTextBrowser" name="textBrowser">
-    <property name="geometry">
-     <rect>
-      <x>320</x>
-      <y>90</y>
-      <width>451</width>
-      <height>411</height>
-     </rect>
     </property>
    </widget>
    <widget class="QPushButton" name="Send_button">
@@ -110,6 +100,22 @@
       <width>256</width>
       <height>451</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="textBrowser">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>90</y>
+      <width>451</width>
+      <height>411</height>
+     </rect>
+    </property>
+    <property name="textInteractionFlags">
+     <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse</set>
     </property>
    </widget>
   </widget>
