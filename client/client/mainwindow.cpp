@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     socket = new QTcpSocket(this);
+    ui->stackedWidget->setCurrentIndex(1);
     connect(ui->lineEdit, &QLineEdit::returnPressed, this, &MainWindow::on_Send_button_clicked);
     connect(ui->lineEditSelect, &QLineEdit::returnPressed, this, &MainWindow::on_Select_button_clicked);
     connect(socket, &QTcpSocket::readyRead, this, &MainWindow::slotReadyRead);
@@ -35,6 +36,7 @@ void MainWindow::on_Connect_button_clicked()
     self_name = ui->lineEditUserName->text();
     out << self_name;
     socket->write(Data);
+    ui->stackedWidget->setCurrentIndex(0);
 }
 
 void MainWindow::on_Select_button_clicked()
