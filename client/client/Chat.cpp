@@ -1,8 +1,24 @@
 #include "Chat.h"
 
+void Chat::delete_massege(int index)
+{
+    massege.removeAt(index);
+}
+
+void Chat::edit_massege(int index, QString string)
+{
+    massege[index].second = string;
+}
+
 void Chat::add_massege(QString user, QString text)
 {
     massege.append(QPair(user, text));
+}
+
+QString Chat::resend_massege(int index)
+{
+    QString re_massege = massege[index].first + ": " + massege[index].second;
+    return re_massege;
 }
 
 QTextBrowser* Chat::getChatText()

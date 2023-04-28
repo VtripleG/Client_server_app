@@ -21,8 +21,10 @@ public:
 private:
     QByteArray Data;
     void SendToClient(QString send_string);
-//    void SendSockets();
+    void SendEditToClient(int row_index, QString send_string);
+    void SendDeleteToClient(int row_index);
 public slots:
+    void slodDeleteSocket();
     void slotAutorisation();
     void incomingConnection(qintptr socketDescriptor);
     void slotReadyRead();

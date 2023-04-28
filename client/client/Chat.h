@@ -10,7 +10,11 @@ public:
     QString first_name;
     QString second_name;
     QList <QPair<QString, QString>> massege;
+
+    void delete_massege(int index);
+    void edit_massege(int index, QString string);
     void add_massege(QString user, QString text);
+    QString resend_massege(int index);
     QTextBrowser * getChatText();
     Chat(QString first_name, QString second_name);
 };

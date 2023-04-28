@@ -5,6 +5,7 @@
 #include <QMainWindow>
 #include <QStackedWidget>
 #include "Chat.h"
+#include "QCloseEvent"
 
 
 QT_BEGIN_NAMESPACE
@@ -17,7 +18,6 @@ class MainWindow : public QMainWindow
 
 public:
     QTcpSocket *socket;
-    QTcpSocket *buff_socket;
     QString geter_name;
     QString self_name;
 
@@ -26,13 +26,23 @@ public:
     QVector <QString> sender_names;
     QVector <Chat> chats;
 
+    void closeEvent(QCloseEvent *event);
 
-    void SendToServer(QString send_string);
+
+    void SendToServer(int action_flag, int row_index, QString send_string);
+    void SendOnChatSpace(QList <QPair<QString, QString>> massege);
+
+    void ReadMassege(QString sender_name, QString read_string);
+    void DeleteMassege(int row_index, QString sender_name);
+    void EditMassege(int row_index, QString sender_name, QString read_string);
+
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 public slots:
     void slotReadyRead();
     void slotSelectListItem();
+    void slotSelectResendMassege();
+    void slotBlockButtons();
 
 private slots:
     void on_Send_button_clicked();
@@ -40,6 +50,14 @@ private slots:
     void on_Connect_button_clicked();
 
     void on_Select_button_clicked();
+
+    void on_resend_button_clicked();
+
+    void on_delete_button_clicked();
+
+    void on_edit_button_clicked();
+
+    void on_send_edit_button_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -28,6 +31,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="Send_button">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>680</x>
@@ -56,9 +62,9 @@
    <widget class="QPushButton" name="Connect_button">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>60</y>
-      <width>281</width>
+      <x>610</x>
+      <y>30</y>
+      <width>161</width>
       <height>25</height>
      </rect>
     </property>
@@ -102,10 +108,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="textBrowser">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
+   <widget class="QListWidget" name="chatSpace">
     <property name="geometry">
      <rect>
       <x>320</x>
@@ -114,10 +117,103 @@
       <height>411</height>
      </rect>
     </property>
-    <property name="textInteractionFlags">
-     <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse</set>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="autoScroll">
+     <bool>false</bool>
     </property>
    </widget>
+   <widget class="QPushButton" name="resend_button">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>60</y>
+      <width>89</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Resend</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="delete_button">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>60</y>
+      <width>89</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Delete</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="edit_button">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>60</y>
+      <width>89</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Edit</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="send_edit_button">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>680</x>
+      <y>510</y>
+      <width>89</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Edit</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="edit_lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>510</y>
+      <width>351</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <zorder>edit_lineEdit</zorder>
+   <zorder>send_edit_button</zorder>
+   <zorder>lineEdit</zorder>
+   <zorder>Send_button</zorder>
+   <zorder>lineEditUserName</zorder>
+   <zorder>Connect_button</zorder>
+   <zorder>lineEditSelect</zorder>
+   <zorder>Select_button</zorder>
+   <zorder>names_list</zorder>
+   <zorder>chatSpace</zorder>
+   <zorder>resend_button</zorder>
+   <zorder>delete_button</zorder>
+   <zorder>edit_button</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
