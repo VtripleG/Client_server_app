@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->names_list, &QListWidget::itemClicked, this, &MainWindow::slotSelectListItem);
     connect(ui->chatSpace, &QListWidget::itemClicked, this, &MainWindow::slotSelectResendMassege);
     connect(ui->edit_lineEdit, &QLineEdit::returnPressed, this, &MainWindow::on_send_edit_button_clicked);
-    connect(ui->chatSpace, &QListWidget::itemSelectionChanged, this, &MainWindow::slotBlockButtons);
+//    connect(ui->chatSpace, &QListWidget::itemSelectionChanged, this, &MainWindow::slotBlockButtons);
     connect(ui->chatSpace, &QListWidget::itemDoubleClicked, this, &MainWindow::on_resend_button_clicked);
 }
 
@@ -78,11 +78,10 @@ void MainWindow::on_Send_button_clicked()
 {
     if(ui->lineEdit->text() != "\0"){
         SendToServer(1, NULL, ui->lineEdit->text());
-        chats[ui->names_list->currentRow()].add_massege(self_name, ui->lineEdit->text());
+        chats[ui->names_list->currentRow()].add_massege(self_name, ui->lineEdit->text(), false);
         SendOnChatSpace(chats[ui->names_list->currentRow()].massege);
 
     }
-    qDebug() << chats[ui->names_list->currentRow()].massege;
     ui->lineEdit->clear();
 
 }
@@ -92,7 +91,7 @@ void MainWindow::on_resend_button_clicked()
     int row_index;
     row_index = ui->chatSpace->currentRow();
     SendToServer(1, NULL, chats[ui->names_list->currentRow()].resend_massege(row_index));
-    chats[ui->names_list->currentRow()].add_massege(self_name, chats[ui->names_list->currentRow()].resend_massege(row_index));
+    chats[ui->names_list->currentRow()].add_massege(self_name, chats[ui->names_list->currentRow()].resend_massege(row_index), false);
     SendOnChatSpace(chats[ui->names_list->currentRow()].massege);
 
     qDebug() << chats[ui->names_list->currentRow()].resend_massege(row_index);
@@ -116,7 +115,7 @@ void MainWindow::on_edit_button_clicked()
 {
     ui->edit_lineEdit->raise();
     ui->send_edit_button->raise();
-    ui->edit_lineEdit->setText(chats[ui->names_list->currentRow()].massege[ui->chatSpace->currentRow()].second);
+    ui->edit_lineEdit->setText(chats[ui->names_list->currentRow()].massege[ui->chatSpace->currentRow()].massege_string);
     ui->resend_button->setEnabled(false);
     ui->delete_button->setEnabled(false);
     ui->edit_button->setEnabled(false);
@@ -151,30 +150,61 @@ void MainWindow::SendToServer(int action_flag, int row_index, QString send_strin
     socket->write(Data);
 }
 
-void MainWindow::SendOnChatSpace(QList<QPair<QString, QString>> massege)
+void MainWindow::SendOnChatSpace(QList <Massege> massege)
 {
     ui->chatSpace->clear();
-//    auto add_item = new QListWidgetItem;
     for ( auto &item: massege)
     {
         auto add_item = new QListWidgetItem;
 
-        if (item.first == self_name)
+        if (item.name == self_name)
         {
             add_item->setTextAlignment(Qt::AlignRight);
-            add_item->setText(item.second);
-            ui->chatSpace->addItem(add_item);
+            if(item.image_flag == false)
+            {
+                add_item->setText(item.massege_string);
+                ui->chatSpace->addItem(add_item);
+            }
+            else
+            {
+                ui->chatSpace->setIconSize(QSize(225, 400));
+                qDebug() << "image";
+                QByteArray byte_array;
+                QString buff_string;
+                buff_string = item.massege_string;
+                byte_array = buff_string.toLocal8Bit();
+                byte_array = QByteArray::fromBase64(byte_array);
+                QImage image = QImage::fromData(byte_array);
+                add_item->setIcon(QPixmap::fromImage(image));
+                ui->chatSpace->addItem(add_item);
+            }
         }
         else{
             add_item->setTextAlignment(Qt::AlignLeft);
-            add_item->setText(item.second);
-            ui->chatSpace->addItem(add_item);
+            if(item.image_flag == false)
+            {
+                add_item->setText(item.massege_string);
+                ui->chatSpace->addItem(add_item);
+            }
+            else
+            {
+                ui->chatSpace->setIconSize(QSize(225, 400));
+                qDebug() << "image";
+                QByteArray byte_array;
+                QString buff_string;
+                buff_string = item.massege_string;
+                byte_array = buff_string.toLocal8Bit();
+                byte_array = QByteArray::fromBase64(byte_array);
+                QImage image = QImage::fromData(byte_array);
+                add_item->setIcon(QPixmap::fromImage(image));
+                ui->chatSpace->addItem(add_item);
+            }
 
         }
     }
 }
 
-void MainWindow::ReadMassege(QString sender_name, QString read_string)
+void MainWindow::ReadMassege(QString sender_name, QString read_string, bool image_flag)
 {
     if(!sender_names.isEmpty())
     {
@@ -188,13 +218,13 @@ void MainWindow::ReadMassege(QString sender_name, QString read_string)
             sender_names.push_back(sender_name);
             ui->names_list->addItem(sender_name);
             chats.push_back(Chat(self_name, sender_name));
-            chats[chats.size()-1].add_massege(sender_name, read_string);
+            chats[chats.size()-1].add_massege(sender_name, read_string, image_flag);
         }
         else{
             for(int i = 0; i < sender_names.size(); i++)
             {
                 if(sender_name == chats[i].second_name){
-                    chats[i].add_massege(sender_name, read_string);
+                    chats[i].add_massege(sender_name, read_string, image_flag);
                     if(ui->names_list->currentRow() == i){
                         SendOnChatSpace(chats[ui->names_list->currentRow()].massege);
                     }
@@ -206,7 +236,7 @@ void MainWindow::ReadMassege(QString sender_name, QString read_string)
         sender_names.push_back(sender_name);
         ui->names_list->addItem(sender_name);
         chats.push_back(Chat(self_name, sender_name));
-        chats[chats.size()-1].add_massege(sender_name, read_string);
+        chats[chats.size()-1].add_massege(sender_name, read_string, image_flag);
     }
 
 }
@@ -259,9 +289,10 @@ void MainWindow::slotReadyRead()
         in >> action_flag >> sender_name >> read_string >> row_index;
         switch (action_flag) {
         case 1:
-            ReadMassege(sender_name, read_string);
+            ReadMassege(sender_name, read_string, false);
             break;
         case 2:
+            ReadMassege(sender_name, read_string, true);
             break;
         case 3:
             DeleteMassege(row_index, sender_name);
@@ -292,7 +323,7 @@ void MainWindow::slotSelectListItem()
 
 void MainWindow::slotSelectResendMassege()
 {
-    if(chats[ui->names_list->currentRow()].massege[ui->chatSpace->currentRow()].first == self_name){
+    if(chats[ui->names_list->currentRow()].massege[ui->chatSpace->currentRow()].name == self_name){
     ui->resend_button->setEnabled(true);
     ui->delete_button->setEnabled(true);
     ui->edit_button->setEnabled(true);
@@ -318,4 +349,22 @@ void MainWindow::slotBlockButtons()
 
 
 
+
+
+void MainWindow::on_send_image_clicked()
+{
+    QString path;
+    path = QFileDialog::getOpenFileName(this, "Select image", "/home/sergey", "PNG Image (*.png)");
+    QImage image(path);
+    QByteArray byte_ar;
+    QBuffer cod_buff (&byte_ar);
+    image.save(&cod_buff, "png");
+    QString string = byte_ar.toBase64();
+
+    chats[ui->names_list->currentRow()].add_massege(self_name, string, true);
+
+    SendToServer(2, NULL, string);
+    SendOnChatSpace(chats[ui->names_list->currentRow()].massege);
+
+}
 

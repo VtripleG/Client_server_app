@@ -21,6 +21,7 @@ public:
 private:
     QByteArray Data;
     void SendToClient(QString send_string);
+    void SendImageToClient(QString send_string);
     void SendEditToClient(int row_index, QString send_string);
     void SendDeleteToClient(int row_index);
 public slots:

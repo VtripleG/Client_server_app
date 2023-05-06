@@ -185,6 +185,31 @@
        <string>Edit</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="send_image">
+      <property name="geometry">
+       <rect>
+        <x>660</x>
+        <y>70</y>
+        <width>89</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>PushButton</string>
+      </property>
+     </widget>
+     <zorder>send_edit_button</zorder>
+     <zorder>delete_button</zorder>
+     <zorder>edit_lineEdit</zorder>
+     <zorder>lineEditSelect</zorder>
+     <zorder>names_list</zorder>
+     <zorder>edit_button</zorder>
+     <zorder>Select_button</zorder>
+     <zorder>lineEdit</zorder>
+     <zorder>Send_button</zorder>
+     <zorder>resend_button</zorder>
+     <zorder>chatSpace</zorder>
+     <zorder>send_image</zorder>
     </widget>
     <widget class="QWidget" name="page_2">
      <widget class="QLineEdit" name="lineEditUserName">

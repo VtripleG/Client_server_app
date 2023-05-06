@@ -112,6 +112,25 @@ void Server::SendToClient(QString send_string)
     }
 }
 
+void Server::SendImageToClient(QString send_string)
+{
+    Data.clear();
+    for(const auto &item: users)
+    {
+        if(item.Socket == socket)
+            sender_user = item;
+    }
+    QDataStream out(&Data, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_6_4);
+    out << 2 << sender_user.Name << send_string << nullptr;
+    for (int i = 0; i < users.size(); i++)
+    {
+        if(end_adress == users[i].Name)
+            users[i].Socket->write(Data);
+    }
+
+}
+
 void Server::SendEditToClient(int row_index, QString send_string)
 {
     Data.clear();

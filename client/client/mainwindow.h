@@ -6,6 +6,9 @@
 #include <QStackedWidget>
 #include "Chat.h"
 #include "QCloseEvent"
+#include <QImage>
+#include <QBuffer>
+#include <QFileDialog>
 
 
 QT_BEGIN_NAMESPACE
@@ -30,9 +33,9 @@ public:
 
 
     void SendToServer(int action_flag, int row_index, QString send_string);
-    void SendOnChatSpace(QList <QPair<QString, QString>> massege);
+    void SendOnChatSpace(QList <Massege> massege);
 
-    void ReadMassege(QString sender_name, QString read_string);
+    void ReadMassege(QString sender_name, QString read_string, bool image_flag);
     void DeleteMassege(int row_index, QString sender_name);
     void EditMassege(int row_index, QString sender_name, QString read_string);
 
@@ -58,6 +61,8 @@ private slots:
     void on_edit_button_clicked();
 
     void on_send_edit_button_clicked();
+
+    void on_send_image_clicked();
 
 private:
     Ui::MainWindow *ui;

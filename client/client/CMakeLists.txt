@@ -20,7 +20,9 @@ set(PROJECT_SOURCES
         mainwindow.ui
         Chat.h
         Chat.cpp
-)
+        Massege.h
+        Massege.cpp
+    )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(client
