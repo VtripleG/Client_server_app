@@ -177,6 +177,7 @@ void MainWindow::SendOnChatSpace(QList <Massege> massege)
                 QImage image = QImage::fromData(byte_array);
                 add_item->setIcon(QPixmap::fromImage(image));
                 ui->chatSpace->addItem(add_item);
+                qDebug() << add_item->flags();
             }
         }
         else{
@@ -197,6 +198,8 @@ void MainWindow::SendOnChatSpace(QList <Massege> massege)
                 byte_array = QByteArray::fromBase64(byte_array);
                 QImage image = QImage::fromData(byte_array);
                 add_item->setIcon(QPixmap::fromImage(image));
+
+
                 ui->chatSpace->addItem(add_item);
             }
 
