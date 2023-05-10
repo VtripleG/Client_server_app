@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_ui->chatSpace, &QListWidget::itemClicked, this, &MainWindow::slotSelectResendMassege);
     connect(m_ui->edit_lineEdit, &QLineEdit::returnPressed, this, &MainWindow::on_send_edit_button_clicked);
     connect(m_ui->chatSpace, &QListWidget::itemDoubleClicked, this, &MainWindow::on_resend_button_clicked);
+    connect(m_ui->lineEditUserName, &QLineEdit::returnPressed, this, &MainWindow::on_Connect_button_clicked);
 }
 
 MainWindow::~MainWindow()
@@ -34,6 +35,7 @@ void MainWindow::on_Connect_button_clicked()
     QDataStream out(&Data, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_6_4);
     self_name = m_ui->lineEditUserName->text();
+    m_ui->lineEditUserName->clearFocus();
     out << self_name;
     socket->write(Data);
     m_ui->stackedWidget->setCurrentIndex(0);
@@ -87,10 +89,17 @@ void MainWindow::on_resend_button_clicked()
 {
     int row_index;
     row_index = m_ui->chatSpace->currentRow();
-    SendToServer(text_, NULL, chats[m_ui->names_list->currentRow()].resendMassege(row_index));
-    chats[m_ui->names_list->currentRow()].addMassege(self_name, chats[m_ui->names_list->currentRow()].resendMassege(row_index), false);
+    if(!chats[m_ui->names_list->currentRow()].getMasseges()[row_index].getImageFlag())
+    {
+        SendToServer(text_, NULL, chats[m_ui->names_list->currentRow()].resendMassege(row_index));
+        chats[m_ui->names_list->currentRow()].addMassege(self_name, chats[m_ui->names_list->currentRow()].resendMassege(row_index), false);
+    }
+    else
+    {
+        SendToServer(image_, NULL, qCompress(chats[m_ui->names_list->currentRow()].getMasseges()[row_index].getText().toLocal8Bit(), 9).toBase64());
+        chats[m_ui->names_list->currentRow()].addMassege(self_name, chats[m_ui->names_list->currentRow()].getMasseges()[row_index].getText(), true);
+    }
     SendOnChatSpace(chats[m_ui->names_list->currentRow()].getMasseges());
-    qDebug() << chats[m_ui->names_list->currentRow()].resendMassege(row_index);
     m_ui->resend_button->setEnabled(false);
     m_ui->delete_button->setEnabled(false);
     m_ui->edit_button->setEnabled(false);
@@ -99,6 +108,7 @@ void MainWindow::on_resend_button_clicked()
 void MainWindow::on_delete_button_clicked()
 {
     int current_row = m_ui->chatSpace->currentRow();
+    qDebug() << current_row;
     SendToServer(delete_, current_row, nullptr);
     chats[m_ui->names_list->currentRow()].deleteMassege(current_row);
     SendOnChatSpace(chats[m_ui->names_list->currentRow()].getMasseges());
@@ -141,7 +151,6 @@ void MainWindow::on_send_image_clicked()
     QString string = byte_ar.toBase64();
     chats[m_ui->names_list->currentRow()].addMassege(self_name, string, true);
     string = QString(qCompress(string.toLocal8Bit(), 9).toBase64());
-//    qDebug() << string;
     SendToServer(image_, NULL, string);
     SendOnChatSpace(chats[m_ui->names_list->currentRow()].getMasseges());
 }
@@ -257,6 +266,7 @@ void MainWindow::ReadMassege(QString sender_name, QString read_string, bool imag
 
 void MainWindow::DeleteMassege(int row_index, QString sender_name)
 {
+    qDebug() << row_index;
     if(!sender_names.isEmpty())
     {
         for(int i = 0; i < sender_names.size(); i++)

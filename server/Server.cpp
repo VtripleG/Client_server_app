@@ -55,12 +55,6 @@ void Server::slotReadyRead()
                 int action_flag;
                 int row_index;
                 in >> action_flag >> end_adress >> read_string >> row_index;
-
-                qDebug() << action_flag;
-                qDebug() << end_adress;
-                qDebug() << read_string;
-                qDebug() << row_index;
-
                 size_block = 0;
                 switch (action_flag)
                 {
@@ -132,7 +126,7 @@ void Server::SendToClient(int action_flag, int row_index, QString send_string)
     }
     QDataStream out(&Data, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_6_4);
-    out << qint64(0) << action_flag << sender_user.Name << send_string << nullptr;
+    out << qint64(0) << action_flag << sender_user.Name << send_string << row_index;
     out.device()->seek(0);
     out << qint64(Data.size() - sizeof(qint64));
     for (int i = 0; i < users.size(); i++)
