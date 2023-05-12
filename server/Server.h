@@ -10,7 +10,7 @@ class Server: public QTcpServer
 {
     Q_OBJECT
 public:
-    Server();
+    Server(qint16 port);
 private:
     QByteArray Data;
     void SendToClient(int action_flag, int row_index, QString send_string);

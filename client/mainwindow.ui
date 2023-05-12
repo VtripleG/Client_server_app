@@ -198,6 +198,19 @@
        <string>PushButton</string>
       </property>
      </widget>
+     <widget class="QLabel" name="UserNameLabel">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>40</y>
+        <width>401</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
      <zorder>send_edit_button</zorder>
      <zorder>delete_button</zorder>
      <zorder>edit_lineEdit</zorder>
@@ -210,6 +223,7 @@
      <zorder>resend_button</zorder>
      <zorder>chatSpace</zorder>
      <zorder>send_image</zorder>
+     <zorder>UserNameLabel</zorder>
     </widget>
     <widget class="QWidget" name="page_2">
      <widget class="QLineEdit" name="lineEditUserName">

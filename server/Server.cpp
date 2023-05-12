@@ -1,11 +1,13 @@
 #include "Server.h"
 #include "QDebug"
 
-Server::Server()
+Server::Server(qint16 port)
 {
     size_block = 0;
     if(this->listen(QHostAddress::Any, 2323))
+    {
         qDebug() << "Sucssesful launche" ;
+    }
     else
     {
         qDebug() << "Error while launching";

@@ -26,7 +26,6 @@ MainWindow::~MainWindow()
 }
 
 
-
 void MainWindow::on_Connect_button_clicked()
 {
     Data.clear();
@@ -38,6 +37,7 @@ void MainWindow::on_Connect_button_clicked()
     m_ui->lineEditUserName->clearFocus();
     out << self_name;
     socket->write(Data);
+    m_ui->UserNameLabel->setText(self_name);
     m_ui->stackedWidget->setCurrentIndex(0);
 }
 
@@ -369,24 +369,6 @@ void MainWindow::slotSelectResendMassege()
     }
     else{m_ui->resend_button->setEnabled(true);}
 }
-
-
-
-
-void MainWindow::slotBlockButtons()
-{
-//    if(!ui->chatSpace->hasFocus())
-//    {
-//        ui->resend_button->setEnabled(false);
-//        ui->delete_button->setEnabled(false);
-//        ui->edit_button->setEnabled(false);
-//    }
-
-    m_ui->resend_button->setEnabled(false);
-    m_ui->delete_button->setEnabled(false);
-    m_ui->edit_button->setEnabled(false);
-}
-
 
 
 
