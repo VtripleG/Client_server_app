@@ -143,7 +143,7 @@ void MainWindow::on_send_edit_button_clicked()
 void MainWindow::on_send_image_clicked()
 {
     QString path;
-    path = QFileDialog::getOpenFileName(this, "Select image", "/home/sergey", "PNG Image (*.png)");
+    path = QFileDialog::getOpenFileName(this, "Select image", "/home/sergey/qt_projects", "PNG Image (*.png)");
     QImage image(path);
     QByteArray byte_ar;
     QBuffer cod_buff (&byte_ar);
@@ -188,16 +188,14 @@ void MainWindow::SendOnChatSpace(QList <Massege> massege)
             }
             else
             {
-                m_ui->chatSpace->setIconSize(QSize(225, 400));
-                qDebug() << "image";
-                QByteArray byte_array;
-                QString buff_string;
-                buff_string = item.getText();
-                byte_array = buff_string.toLocal8Bit();
-                byte_array = QByteArray::fromBase64(byte_array);
-                QImage image = QImage::fromData(byte_array);
-                add_item->setIcon(QPixmap::fromImage(image));
+                auto label = PrintImage(item.getText());
+                label->setAlignment(Qt::AlignRight);
                 m_ui->chatSpace->addItem(add_item);
+                add_item->setSizeHint(QSize(label->pixmap().width(), label->pixmap().height()+10));
+                m_ui->chatSpace->setItemWidget(add_item, label);
+                qDebug() << label->width() << " " << label->height();
+                qDebug() << label->pixmap().height();
+                qDebug() << add_item->sizeHint();
             }
         }
         else
@@ -210,19 +208,34 @@ void MainWindow::SendOnChatSpace(QList <Massege> massege)
             }
             else
             {
-                m_ui->chatSpace->setIconSize(QSize(225, 400));
-                qDebug() << "image";
-                QByteArray byte_array;
-                QString buff_string;
-                buff_string = item.getText();
-                byte_array = buff_string.toLocal8Bit();
-                byte_array = QByteArray::fromBase64(byte_array);
-                QImage image = QImage::fromData(byte_array);
-                add_item->setIcon(QPixmap::fromImage(image));
+                auto label = PrintImage(item.getText());
+                label->setAlignment(Qt::AlignLeft);
                 m_ui->chatSpace->addItem(add_item);
+                add_item->setSizeHint(QSize(label->pixmap().width(), label->pixmap().height()+10));
+                m_ui->chatSpace->setItemWidget(add_item, label);
+                qDebug() << label->width() << " " << label->height();
+                qDebug() << label->pixmap().height();
+                qDebug() << add_item->sizeHint();
             }
         }
     }
+}
+
+QLabel *MainWindow::PrintImage(QString string)
+{
+    qDebug() << "image";
+    QByteArray byte_array;
+    byte_array = string.toLocal8Bit();
+    byte_array = QByteArray::fromBase64(byte_array);
+    QImage image = QImage::fromData(byte_array);
+    auto label = new QLabel(this);
+    if(image.height() > image.width())
+        label->setPixmap(QPixmap::fromImage(image).scaled(image.width()/(image.height()/300), image.height()/(image.height()/300), Qt::KeepAspectRatio));
+    else
+        label->setPixmap(QPixmap::fromImage(image).scaled(image.width()/(image.width()/300), image.height()/(image.width()/300), Qt::KeepAspectRatio));
+    label->setMask(QPixmap::fromImage(image).mask());
+    return label;
+
 }
 
 void MainWindow::ReadMassege(QString sender_name, QString read_string, bool image_flag)
