@@ -389,3 +389,9 @@ void MainWindow::slotSelectResendMassege()
 
 
 
+
+void MainWindow::on_graffiti_button_clicked()
+{
+    m_ui->stackedWidget->setCurrentIndex(2);
+}
+

@@ -57,6 +57,8 @@ private slots:
 
     void on_send_image_clicked();
 
+    void on_graffiti_button_clicked();
+
 private:
     Ui::MainWindow *m_ui;
 
