@@ -9,8 +9,8 @@ MainWindow::MainWindow(QWidget *parent)
     m_ui->setupUi(this);
     m_ui->stackedWidget->setCurrentIndex(2);
     m_ui->stackedWidget->addWidget(m_graffiti_space);
-    widget_painter = new QPainter(m_graffiti_space);
     m_graffiti_space->setGeometry(70, 50, 660, 460);
+    m_graffiti_space->setMouseTracking(true);
     socket = new QTcpSocket(this);
     m_ui->stackedWidget->setCurrentIndex(1);
     connect(m_ui->lineEdit, &QLineEdit::returnPressed, this, &MainWindow::on_Send_button_clicked);
@@ -159,13 +159,29 @@ void MainWindow::on_send_image_clicked()
     SendOnChatSpace(chats[m_ui->names_list->currentRow()].getMasseges());
 }
 
+void MainWindow::on_graffiti_button_clicked()
+{
+    m_ui->stackedWidget->setCurrentIndex(2);
+    m_graffiti_space->show();
+
+}
+
+void MainWindow::on_send_graffiti_button_clicked()
+{
+    m_ui->stackedWidget->setCurrentIndex(0);
+    m_graffiti_space->raise();
+}
+
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     SendToServer(9, NULL, nullptr);
 }
 
-
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    m_graffiti_space->mousePressEvent(event);
+}
 
 
 void MainWindow::SendToServer(int action_flag, int row_index, QString send_string)
@@ -397,17 +413,4 @@ void MainWindow::slotSelectResendMassege()
 
 
 
-void MainWindow::on_graffiti_button_clicked()
-{
-    m_ui->stackedWidget->setCurrentIndex(2);
-    m_graffiti_space->show();
-
-}
-
-
-void MainWindow::on_send_graffiti_button_clicked()
-{
-    m_ui->stackedWidget->setCurrentIndex(0);
-    m_graffiti_space->raise();
-}
 
