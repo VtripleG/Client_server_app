@@ -22,6 +22,9 @@ set(PROJECT_SOURCES
         Chat.cpp
         Massege.h
         Massege.cpp
+        Graffiti_space.h
+        Graffiti_space.cpp
+
     )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

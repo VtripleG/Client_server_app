@@ -5,11 +5,16 @@
 #include <QMainWindow>
 #include <QStackedWidget>
 #include "Chat.h"
-#include "QCloseEvent"
+#include <QCloseEvent>
+#include <QMouseEvent>
+#include <QPainter>
 #include <QImage>
 #include <QBuffer>
 #include <QFileDialog>
 #include <QLabel>
+#include <QGraphicsView>
+#include "Graffiti_space.h"
+
 
 
 QT_BEGIN_NAMESPACE
@@ -38,7 +43,6 @@ public slots:
     void slotReadyRead();
     void slotSelectListItem();
     void slotSelectResendMassege();
-    void slotBlockButtons();
 
 private slots:
     void on_Send_button_clicked();
@@ -58,6 +62,8 @@ private slots:
     void on_send_image_clicked();
 
     void on_graffiti_button_clicked();
+
+    void on_send_graffiti_button_clicked();
 
 private:
     Ui::MainWindow *m_ui;
@@ -82,5 +88,13 @@ private:
 
     QVector <QString> sender_names;
     QVector <Chat> chats;
+
+    QImage * graffiti = new QImage;
+
+    QPainter * image_painter = new QPainter(graffiti);
+    QPainter * widget_painter;
+
+    Graffiti_space * m_graffiti_space = new Graffiti_space;
+
 };
 #endif // MAINWINDOW_H
