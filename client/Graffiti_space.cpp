@@ -1,20 +1,30 @@
 #include "Graffiti_space.h"
 #include <QBuffer>
 #include <QByteArray>
-
-void Graffiti_space::mousePressEvent(QMouseEvent *event)
-{
-    m_image_painter->begin(m_graffiti);
-    m_image_painter->drawPoint(event->pos().x(), event->pos().y());
-    QByteArray byte_array;
-    QBuffer buff(&byte_array);
-    m_graffiti->save(&buff, "png");
-    m_scene_painter->begin(this);
-    m_scene_painter->drawImage(QPoint(0, 0), QImage::fromData(byte_array, "png"));
-}
+#include <QGraphicsScene>
 
 Graffiti_space::Graffiti_space(QWidget *parent)
 {
 }
 
+void Graffiti_space::mousePressEvent(QMouseEvent *event)
+{
+    m_points_vector.push_back(event->pos());
+    qDebug()<<"class mouse event";
+    update();
+}
+
+//void Graffiti_space::paintEvent(QPaintEvent *event)
+//{
+//    qDebug() << "start painting";
+//    m_image_painter.begin(this);
+//    QPen pen;
+//    pen.setColor(QColor(1, 0, 0));
+//    pen.setWidth(10);
+//    m_image_painter.setPen(pen);
+//    for(auto &point: m_points_vector)
+//    {
+//        m_image_painter.drawPoint(point);
+//    }
+//}
 

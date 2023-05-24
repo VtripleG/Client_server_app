@@ -180,7 +180,28 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
-    m_graffiti_space->mousePressEvent(event);
+    if(
+            (event->pos().x() >= m_graffiti_space->x()) && (event->pos().x() <= (m_graffiti_space->x() + m_graffiti_space->width())) &&
+            (event->pos().y() >= m_graffiti_space->y()) && (event->pos().y() <= (m_graffiti_space->y() + m_graffiti_space->height())) &&
+            (m_ui->stackedWidget->currentIndex() == 2)
+
+      )
+    {
+        qDebug() << "Complete mouse event";
+//        update();
+        repaint();
+    }
+}
+
+void MainWindow::paintEvent(QPaintEvent *event)
+{
+    QPainter painter(m_graffiti_space);
+//    painter.begin(m_graffiti_space);
+    QPen pen;
+    pen.setColor(QColor(1, 0, 0));
+    pen.setWidth(10);
+    painter.setPen(pen);
+    painter.drawImage(10, 10, m_graffiti_space->m_graffiti);
 }
 
 

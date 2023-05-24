@@ -11,12 +11,16 @@ class Graffiti_space : public QGraphicsView
 {
     Q_OBJECT
 public:
-    void mousePressEvent(QMouseEvent * event);
     Graffiti_space(QWidget *parent = nullptr);
+    void mousePressEvent(QMouseEvent * event);
+//    void paintEvent(QPaintEvent *event);
+
+    QImage m_graffiti = QImage(660, 460, QImage::Format_RGB32);
+    QPainter m_image_painter;
+
+
 private:
-    QImage * m_graffiti = new QImage(660, 460, QImage::Format_RGB32);
-    QPainter * m_image_painter = new QPainter;
-    QPainter * m_scene_painter = new QPainter;
+    QVector <QPoint> m_points_vector;
 };
 
 #endif // GRAFFITI_SPACE_H

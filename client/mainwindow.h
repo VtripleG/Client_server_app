@@ -7,6 +7,7 @@
 #include "Chat.h"
 #include <QCloseEvent>
 #include <QMouseEvent>
+#include <QPaintEvent>
 #include <QPainter>
 #include <QImage>
 #include <QBuffer>
@@ -29,6 +30,7 @@ public:
 
     void closeEvent(QCloseEvent *event);
     void mousePressEvent(QMouseEvent *event);
+    void paintEvent(QPaintEvent *event);
 
     void SendToServer(int action_flag, int row_index, QString send_string);
     void SendOnChatSpace(QList <Massege> massege);
