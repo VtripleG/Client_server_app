@@ -14,17 +14,21 @@ class Graffiti_space : public QWidget
 public:
     Graffiti_space(QWidget *parent = nullptr);
     void mousePressEvent(QMouseEvent * event);
-    void drawPoint(QPoint point);
+    void mouseMoveEvent(QMouseEvent * event);
+    void mouseReleaseEvent(QMouseEvent * event);
+    void drawLine(QPoint point);
     void paintEvent(QPaintEvent *event);
 
-    QImage m_graffiti = QImage(660, 460, QImage::Format_RGB32);
-    QPainter m_image_painter;
-    QPainter m_widget_painter;
+    QImage m_graffiti = QImage(660, 460, QImage::Format_RGBA64);
 
 
 
 private:
     QVector <QPoint> m_points_vector;
+    bool m_line_flag = false;
+
+    QPoint str_point;
+    QPoint end_point;
 };
 
 #endif // GRAFFITI_SPACE_H
