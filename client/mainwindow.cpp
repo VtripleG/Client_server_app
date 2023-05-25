@@ -2,7 +2,7 @@
 #include "./ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
+    : QMainWindow(parent), m_graffiti_space(new Graffiti_space(this))
     , m_ui(new Ui::MainWindow)
 {
     size_block = 0;
@@ -161,7 +161,9 @@ void MainWindow::on_send_image_clicked()
 
 void MainWindow::on_graffiti_button_clicked()
 {
-    m_ui->stackedWidget->setCurrentIndex(2);
+//    m_ui->stackedWidget->setCurrentIndex(2);
+    m_ui->stackedWidget->setCurrentWidget(m_graffiti_space);
+
     m_graffiti_space->show();
 
 }
@@ -176,32 +178,6 @@ void MainWindow::on_send_graffiti_button_clicked()
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     SendToServer(9, NULL, nullptr);
-}
-
-void MainWindow::mousePressEvent(QMouseEvent *event)
-{
-    if(
-            (event->pos().x() >= m_graffiti_space->x()) && (event->pos().x() <= (m_graffiti_space->x() + m_graffiti_space->width())) &&
-            (event->pos().y() >= m_graffiti_space->y()) && (event->pos().y() <= (m_graffiti_space->y() + m_graffiti_space->height())) &&
-            (m_ui->stackedWidget->currentIndex() == 2)
-
-      )
-    {
-        qDebug() << "Complete mouse event";
-//        update();
-        repaint();
-    }
-}
-
-void MainWindow::paintEvent(QPaintEvent *event)
-{
-    QPainter painter(m_graffiti_space);
-//    painter.begin(m_graffiti_space);
-    QPen pen;
-    pen.setColor(QColor(1, 0, 0));
-    pen.setWidth(10);
-    painter.setPen(pen);
-    painter.drawImage(10, 10, m_graffiti_space->m_graffiti);
 }
 
 

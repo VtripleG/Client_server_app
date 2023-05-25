@@ -29,8 +29,6 @@ class MainWindow : public QMainWindow
 public:
 
     void closeEvent(QCloseEvent *event);
-    void mousePressEvent(QMouseEvent *event);
-    void paintEvent(QPaintEvent *event);
 
     void SendToServer(int action_flag, int row_index, QString send_string);
     void SendOnChatSpace(QList <Massege> massege);
@@ -92,7 +90,7 @@ private:
     QVector <QString> sender_names;
     QVector <Chat> chats;
 
-    Graffiti_space * m_graffiti_space = new Graffiti_space;
+    Graffiti_space * m_graffiti_space;
 
 };
 #endif // MAINWINDOW_H
