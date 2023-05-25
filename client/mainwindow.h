@@ -90,7 +90,7 @@ private:
     QVector <QString> sender_names;
     QVector <Chat> chats;
 
-    Graffiti_space * m_graffiti_space;
+//    Graffiti_space * m_graffiti_space;
 
 };
 #endif // MAINWINDOW_H

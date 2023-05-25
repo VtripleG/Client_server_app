@@ -2,15 +2,15 @@
 #include "./ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), m_graffiti_space(new Graffiti_space(this))
+    : QMainWindow(parent)/*, m_graffiti_space(new Graffiti_space(this))*/
     , m_ui(new Ui::MainWindow)
 {
     size_block = 0;
     m_ui->setupUi(this);
-    m_ui->stackedWidget->setCurrentIndex(2);
-    m_ui->stackedWidget->addWidget(m_graffiti_space);
-    m_graffiti_space->setGeometry(70, 50, 660, 460);
-    m_graffiti_space->setMouseTracking(true);
+//    m_ui->stackedWidget->setCurrentIndex(2);
+//    m_ui->stackedWidget->addWidget(m_graffiti_space);
+//    m_graffiti_space->setGeometry(70, 50, 660, 460);
+//    m_graffiti_space->setMouseTracking(true);
     socket = new QTcpSocket(this);
     m_ui->stackedWidget->setCurrentIndex(1);
     connect(m_ui->lineEdit, &QLineEdit::returnPressed, this, &MainWindow::on_Send_button_clicked);
@@ -161,17 +161,17 @@ void MainWindow::on_send_image_clicked()
 
 void MainWindow::on_graffiti_button_clicked()
 {
-//    m_ui->stackedWidget->setCurrentIndex(2);
-    m_ui->stackedWidget->setCurrentWidget(m_graffiti_space);
+    m_ui->stackedWidget->setCurrentIndex(2);
+//    m_ui->stackedWidget->setCurrentWidget(m_graffiti_space);
 
-    m_graffiti_space->show();
+//    m_graffiti_space->show();
 
 }
 
 void MainWindow::on_send_graffiti_button_clicked()
 {
     m_ui->stackedWidget->setCurrentIndex(0);
-    m_graffiti_space->raise();
+//    m_graffiti_space->raise();
 }
 
 
