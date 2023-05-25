@@ -66,6 +66,12 @@ private slots:
 
     void on_send_graffiti_button_clicked();
 
+    void on_set_red_button_clicked();
+
+    void on_set_green_button_clicked();
+
+    void on_set_blue_button_clicked();
+
 private:
     Ui::MainWindow *m_ui;
 

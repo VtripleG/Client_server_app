@@ -9,13 +9,21 @@ Graffiti_space::Graffiti_space(QWidget *parent):
     setMouseTracking(true);
 }
 
+void Graffiti_space::setColor(QColor color)
+{
+    m_color = color;
+}
+
+QImage Graffiti_space::getImage()
+{
+    return m_graffiti;
+}
+
 void Graffiti_space::mousePressEvent(QMouseEvent *event)
 {
     m_line_flag = true;
-    str_point = event->pos();
-//    m_points_vector.push_back(event->pos());
+    m_str_point = event->pos();
     drawLine(event->pos());
-    qDebug()<<"class mouse event";
     update();
 }
 
@@ -24,11 +32,9 @@ void Graffiti_space::mouseMoveEvent(QMouseEvent *event)
     if(m_line_flag)
     {
         drawLine(event->pos());
-        str_point = event->pos();
-//        m_points_vector.push_back(event->pos());
+        m_str_point = event->pos();
         update();
     }
-
 }
 
 void Graffiti_space::mouseReleaseEvent(QMouseEvent *event)
@@ -40,26 +46,15 @@ void Graffiti_space::drawLine(QPoint point)
 {
     QPainter image_painter(&m_graffiti);
     QPen pen;
-    pen.setColor(Qt::red);
+    pen.setColor(m_color);
     pen.setWidth(6);
     image_painter.setPen(pen);
-    image_painter.drawLine(str_point, point);
-//    image_painter.drawPoint(point);
-//    update();
+    image_painter.drawLine(m_str_point, point);
 }
 
 void Graffiti_space::paintEvent(QPaintEvent *event)
 {
-    qDebug() << "start painting";
     QPainter painter(this);
-//    QPen pen;
-//    pen.setColor(Qt::red);
-//    pen.setWidth(10);
-//    painter.setPen(pen);
-//    for(auto &point: m_points_vector)
-//    {
-//        painter.drawPoint(point);
-//    }
     painter.drawImage(0, 0, m_graffiti);
 }
 

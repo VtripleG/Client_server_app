@@ -162,7 +162,32 @@ void MainWindow::on_graffiti_button_clicked()
 
 void MainWindow::on_send_graffiti_button_clicked()
 {
+    QImage image = m_ui->widget->getImage();
+    QByteArray byte_ar;
+    QBuffer cod_buff (&byte_ar);
+    image.save(&cod_buff, "png");
+    QString string = byte_ar.toBase64();
+    chats[m_ui->names_list->currentRow()].addMassege(self_name, string, true);
+    string = QString(qCompress(string.toLocal8Bit(), 9).toBase64());
+    SendToServer(image_, NULL, string);
+    SendOnChatSpace(chats[m_ui->names_list->currentRow()].getMasseges());
+
     m_ui->stackedWidget->setCurrentIndex(0);
+}
+
+void MainWindow::on_set_red_button_clicked()
+{
+    m_ui->widget->setColor(QColor(Qt::red));
+}
+
+void MainWindow::on_set_green_button_clicked()
+{
+    m_ui->widget->setColor(QColor(Qt::green));
+}
+
+void MainWindow::on_set_blue_button_clicked()
+{
+    m_ui->widget->setColor(QColor(Qt::blue));
 }
 
 
@@ -393,6 +418,8 @@ void MainWindow::slotSelectResendMassege()
     }
     else{m_ui->resend_button->setEnabled(true);}
 }
+
+
 
 
 
