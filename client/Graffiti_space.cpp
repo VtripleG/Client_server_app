@@ -7,6 +7,7 @@ Graffiti_space::Graffiti_space(QWidget *parent):
     QWidget(parent)
 {
     setMouseTracking(true);
+    clearImage();
 }
 
 void Graffiti_space::setColor(QColor color)
@@ -14,9 +15,18 @@ void Graffiti_space::setColor(QColor color)
     m_color = color;
 }
 
-QImage Graffiti_space::getImage()
+QString Graffiti_space::getImage()
 {
-    return m_graffiti;
+    QByteArray byte_ar;
+    QBuffer cod_buff (&byte_ar);
+    m_graffiti.save(&cod_buff, "png");
+    QString string = byte_ar.toBase64();
+    return string;
+}
+
+void Graffiti_space::clearImage()
+{
+    m_graffiti.fill(qRgb(0, 0, 0));
 }
 
 void Graffiti_space::mousePressEvent(QMouseEvent *event)
@@ -50,6 +60,7 @@ void Graffiti_space::drawLine(QPoint point)
     pen.setWidth(6);
     image_painter.setPen(pen);
     image_painter.drawLine(m_str_point, point);
+    update();
 }
 
 void Graffiti_space::paintEvent(QPaintEvent *event)
