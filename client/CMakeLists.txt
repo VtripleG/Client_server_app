@@ -54,6 +54,7 @@ target_link_libraries(client PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(client PRIVATE Qt${QT_VERSION_MAJOR}::Network)
 
 
+
 set_target_properties(client PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}

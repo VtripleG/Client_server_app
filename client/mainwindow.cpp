@@ -18,6 +18,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_ui->edit_lineEdit, &QLineEdit::returnPressed, this, &MainWindow::on_send_edit_button_clicked);
     connect(m_ui->chatSpace, &QListWidget::itemDoubleClicked, this, &MainWindow::on_resend_button_clicked);
     connect(m_ui->lineEditUserName, &QLineEdit::returnPressed, this, &MainWindow::on_Connect_button_clicked);
+    connect(m_ui->widget, &Graffiti_space::clicked, this, &MainWindow::ImageChanched);
+    setCentralWidget(m_ui->stackedWidget);
 }
 
 MainWindow::~MainWindow()
@@ -39,6 +41,7 @@ void MainWindow::on_Connect_button_clicked()
     socket->write(Data);
     m_ui->UserNameLabel->setText(self_name);
     m_ui->stackedWidget->setCurrentIndex(0);
+    m_ui->stackedWidget_2->setCurrentIndex(0);
 }
 
 void MainWindow::on_Select_button_clicked()
@@ -57,6 +60,7 @@ void MainWindow::on_Select_button_clicked()
             sender_names.push_back(geter_name);
             m_ui->names_list->addItem(geter_name);
             chats.push_back(Chat(self_name, geter_name));
+            graffitis.push_back(QImage());
             m_ui->names_list->setCurrentRow(chats.size()-1);
             SendOnChatSpace(chats[m_ui->names_list->currentRow()].getMasseges());
         }
@@ -66,6 +70,7 @@ void MainWindow::on_Select_button_clicked()
         sender_names.push_back(geter_name);
         m_ui->names_list->addItem(geter_name);
         chats.push_back(Chat(self_name, geter_name));
+        graffitis.push_back(QImage());
         m_ui->names_list->setCurrentRow(chats.size()-1);
         SendOnChatSpace(chats[m_ui->names_list->currentRow()].getMasseges());
     }
@@ -119,8 +124,7 @@ void MainWindow::on_delete_button_clicked()
 
 void MainWindow::on_edit_button_clicked()
 {
-    m_ui->edit_lineEdit->raise();
-    m_ui->send_edit_button->raise();
+    m_ui->stackedWidget_2->setCurrentIndex(1);
     m_ui->edit_lineEdit->setText(chats[m_ui->names_list->currentRow()].getMasseges()[m_ui->chatSpace->currentRow()].getText());
     m_ui->resend_button->setEnabled(false);
     m_ui->delete_button->setEnabled(false);
@@ -135,8 +139,7 @@ void MainWindow::on_send_edit_button_clicked()
     SendOnChatSpace(chats[m_ui->names_list->currentRow()].getMasseges());
     SendToServer(edit_, current_row, m_ui->edit_lineEdit->text());
     m_ui->edit_lineEdit->clear();
-    m_ui->Send_button->raise();
-    m_ui->lineEdit->raise();
+    m_ui->stackedWidget_2->setCurrentIndex(0);
     m_ui->lineEdit->setFocus();
 }
 
@@ -162,6 +165,7 @@ void MainWindow::on_graffiti_button_clicked()
 
 void MainWindow::on_send_graffiti_button_clicked()
 {
+    stream_flag = false;
     QString string = m_ui->widget->getImage();
     chats[m_ui->names_list->currentRow()].addMassege(self_name, string, true);
     string = QString(qCompress(string.toLocal8Bit(), 9).toBase64());
@@ -184,6 +188,42 @@ void MainWindow::on_set_green_button_clicked()
 void MainWindow::on_set_blue_button_clicked()
 {
     m_ui->widget->setColor(QColor(Qt::blue));
+}
+
+void MainWindow::on_setBackGround_clicked()
+{
+    QString path;
+    path = QFileDialog::getOpenFileName(this, "Select image", "/home/sergey/qt_projects", "PNG Image (*.png)");
+    QImage image(path);
+    m_ui->widget->setBackground(image);
+}
+
+void MainWindow::on_view_stream_clicked()
+{
+    m_ui->stackedWidget->setCurrentIndex(2);
+    stream_flag = true;
+    while(stream_flag = true)
+    {
+        if(stream_flag = false)
+            break;
+        m_ui->widget->setImage(graffitis[m_ui->names_list->currentRow()]);
+    }
+}
+
+void MainWindow::on_stream_flag_clicked()
+{
+    stream_flag = true;
+    while(stream_flag = true)
+    {
+        if(stream_flag = false)
+            break;
+        SendToServer(stream_graffiti_, NULL, m_ui->widget->getImage());
+    }
+}
+
+void MainWindow::on_stream_flag_released()
+{
+    stream_flag = false;
 }
 
 
@@ -285,6 +325,7 @@ void MainWindow::ReadMassege(QString sender_name, QString read_string, bool imag
             sender_names.push_back(sender_name);
             m_ui->names_list->addItem(sender_name);
             chats.push_back(Chat(self_name, sender_name));
+            graffitis.push_back(QImage());
             chats[chats.size()-1].addMassege(sender_name, read_string, image_flag);
         }
         else
@@ -305,6 +346,7 @@ void MainWindow::ReadMassege(QString sender_name, QString read_string, bool imag
         sender_names.push_back(sender_name);
         m_ui->names_list->addItem(sender_name);
         chats.push_back(Chat(self_name, sender_name));
+        graffitis.push_back(QImage());
         chats[chats.size()-1].addMassege(sender_name, read_string, image_flag);
     }
 }
@@ -340,6 +382,24 @@ void MainWindow::EditMassege(int row_index, QString sender_name, QString read_st
                     SendOnChatSpace(chats[m_ui->names_list->currentRow()].getMasseges());
                 }
                 break;
+            }
+        }
+    }
+}
+
+void MainWindow::GetStreamingGraffiti(QString sender_name, QString read_string)
+{
+    QByteArray byte_array;
+    byte_array = read_string.toLocal8Bit();
+    byte_array = QByteArray::fromBase64(byte_array);
+    QImage image = QImage::fromData(byte_array);
+    if(!sender_names.isEmpty())
+    {
+        for(int i = 0; i < sender_names.size(); i++)
+        {
+            if(sender_name == chats[i].getSecomdName())
+            {
+                graffitis[i] = image;
             }
         }
     }
@@ -388,6 +448,9 @@ void MainWindow::slotReadyRead()
             case edit_:
                 EditMassege(row_index, sender_name, read_string);
                 break;
+            case stream_graffiti_:
+                GetStreamingGraffiti(sender_name, read_string);
+                break;
             default:
                 break;
             }
@@ -415,13 +478,7 @@ void MainWindow::slotSelectResendMassege()
     else{m_ui->resend_button->setEnabled(true);}
 }
 
-
-
-
-
-
-
-
-
-
-
+void MainWindow::ImageChanched()
+{
+    qDebug() << 1;
+}

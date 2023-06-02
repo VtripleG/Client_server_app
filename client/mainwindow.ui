@@ -24,80 +24,12 @@
        <number>2</number>
       </property>
       <widget class="QWidget" name="page">
-       <widget class="QPushButton" name="delete_button">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>440</x>
-          <y>70</y>
-          <width>89</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Delete</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="edit_lineEdit">
-        <property name="geometry">
-         <rect>
-          <x>340</x>
-          <y>520</y>
-          <width>351</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEditSelect">
-        <property name="geometry">
-         <rect>
-          <x>60</x>
-          <y>40</y>
-          <width>251</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-       <widget class="QListWidget" name="names_list">
-        <property name="geometry">
-         <rect>
-          <x>60</x>
-          <y>100</y>
-          <width>256</width>
-          <height>451</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="edit_button">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>540</x>
-          <y>70</y>
-          <width>89</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Edit</string>
-        </property>
-       </widget>
        <widget class="QPushButton" name="Select_button">
         <property name="geometry">
          <rect>
-          <x>60</x>
-          <y>70</y>
-          <width>251</width>
+          <x>11</x>
+          <y>32</y>
+          <width>181</width>
           <height>25</height>
          </rect>
         </property>
@@ -105,58 +37,48 @@
          <string>Select</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit">
+       <widget class="QListWidget" name="names_list">
         <property name="geometry">
          <rect>
-          <x>340</x>
-          <y>520</y>
-          <width>351</width>
+          <x>11</x>
+          <y>63</y>
+          <width>179</width>
+          <height>474</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEditSelect">
+        <property name="geometry">
+         <rect>
+          <x>11</x>
+          <y>1</y>
+          <width>181</width>
           <height>25</height>
          </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
         <property name="text">
          <string/>
         </property>
        </widget>
-       <widget class="QPushButton" name="Send_button">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>700</x>
-          <y>520</y>
-          <width>89</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Send</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="resend_button">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>340</x>
-          <y>70</y>
-          <width>89</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Resend</string>
-        </property>
-       </widget>
        <widget class="QListWidget" name="chatSpace">
         <property name="geometry">
          <rect>
-          <x>340</x>
-          <y>100</y>
-          <width>451</width>
-          <height>411</height>
+          <x>210</x>
+          <y>60</y>
+          <width>571</width>
+          <height>401</height>
          </rect>
         </property>
         <property name="verticalScrollBarPolicy">
@@ -172,28 +94,99 @@
          <enum>QAbstractItemView::ScrollPerPixel</enum>
         </property>
        </widget>
-       <widget class="QPushButton" name="send_edit_button">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
+       <widget class="QStackedWidget" name="stackedWidget_2">
         <property name="geometry">
          <rect>
-          <x>700</x>
-          <y>520</y>
-          <width>89</width>
-          <height>25</height>
+          <x>210</x>
+          <y>470</y>
+          <width>571</width>
+          <height>61</height>
          </rect>
         </property>
-        <property name="text">
-         <string>Edit</string>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
+        <property name="lineWidth">
+         <number>0</number>
+        </property>
+        <property name="currentIndex">
+         <number>1</number>
+        </property>
+        <widget class="QWidget" name="sendMassege">
+         <widget class="QWidget" name="horizontalLayoutWidget_3">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>571</width>
+            <height>80</height>
+           </rect>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <item>
+            <widget class="QLineEdit" name="lineEdit">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="Send_button">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="text">
+              <string>Send</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="editMassege">
+         <widget class="QWidget" name="horizontalLayoutWidget_4">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>571</width>
+            <height>80</height>
+           </rect>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_6">
+           <property name="sizeConstraint">
+            <enum>QLayout::SetDefaultConstraint</enum>
+           </property>
+           <item>
+            <widget class="QLineEdit" name="edit_lineEdit">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="send_edit_button">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="text">
+              <string>Edit</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
        </widget>
        <widget class="QPushButton" name="send_image">
         <property name="geometry">
          <rect>
           <x>700</x>
-          <y>70</y>
-          <width>89</width>
+          <y>30</y>
+          <width>80</width>
           <height>25</height>
          </rect>
         </property>
@@ -201,25 +194,12 @@
          <string>Send Img</string>
         </property>
        </widget>
-       <widget class="QLabel" name="UserNameLabel">
-        <property name="geometry">
-         <rect>
-          <x>340</x>
-          <y>40</y>
-          <width>401</width>
-          <height>17</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
        <widget class="QPushButton" name="graffiti_button">
         <property name="geometry">
          <rect>
-          <x>700</x>
-          <y>30</y>
-          <width>89</width>
+          <x>690</x>
+          <y>0</y>
+          <width>92</width>
           <height>25</height>
          </rect>
         </property>
@@ -227,20 +207,74 @@
          <string>Send GRRFT</string>
         </property>
        </widget>
-       <zorder>send_edit_button</zorder>
-       <zorder>delete_button</zorder>
-       <zorder>edit_lineEdit</zorder>
-       <zorder>lineEditSelect</zorder>
-       <zorder>names_list</zorder>
-       <zorder>edit_button</zorder>
-       <zorder>Select_button</zorder>
-       <zorder>lineEdit</zorder>
-       <zorder>Send_button</zorder>
-       <zorder>resend_button</zorder>
-       <zorder>chatSpace</zorder>
-       <zorder>send_image</zorder>
-       <zorder>UserNameLabel</zorder>
-       <zorder>graffiti_button</zorder>
+       <widget class="QWidget" name="horizontalLayoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>210</x>
+          <y>30</y>
+          <width>351</width>
+          <height>27</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QPushButton" name="resend_button">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Resend</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="delete_button">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Delete</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="edit_button">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Edit</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QLabel" name="UserNameLabel">
+        <property name="geometry">
+         <rect>
+          <x>210</x>
+          <y>0</y>
+          <width>351</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="view_stream">
+        <property name="geometry">
+         <rect>
+          <x>578</x>
+          <y>0</y>
+          <width>101</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Show stream</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="page_2">
        <widget class="QLineEdit" name="lineEditUserName">
@@ -292,6 +326,13 @@
            <widget class="QPushButton" name="set_blue_button">
             <property name="text">
              <string>Blue</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="setBackGround">
+            <property name="text">
+             <string>Set bkgrnd</string>
             </property>
            </widget>
           </item>

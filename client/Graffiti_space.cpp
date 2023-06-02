@@ -1,7 +1,4 @@
 #include "Graffiti_space.h"
-#include <QBuffer>
-#include <QByteArray>
-#include <QGraphicsScene>
 
 Graffiti_space::Graffiti_space(QWidget *parent):
     QWidget(parent)
@@ -27,6 +24,36 @@ QString Graffiti_space::getImage()
 void Graffiti_space::clearImage()
 {
     m_graffiti.fill(qRgb(0, 0, 0));
+}
+
+void Graffiti_space::setImage(QImage back_ground)
+{
+    clearImage();
+    if(back_ground.width() > back_ground.height())
+    {
+        back_ground = back_ground.scaled(QSize(660, (back_ground.height()/(back_ground.width()/660))), Qt::KeepAspectRatio);
+    }
+    else
+    {
+        back_ground = back_ground.scaled(QSize((back_ground.width()/(back_ground.height()/460)), 460), Qt::KeepAspectRatio);
+    }
+    m_graffiti = back_ground;
+    update();
+}
+
+void Graffiti_space::setBackground(QImage back_ground)
+{
+    clearImage();
+    if(back_ground.width() > back_ground.height())
+    {
+        back_ground = back_ground.scaled(QSize(660, (back_ground.height()/(back_ground.width()/660))), Qt::KeepAspectRatio);
+    }
+    else
+    {
+        back_ground = back_ground.scaled(QSize((back_ground.width()/(back_ground.height()/460)), 460), Qt::KeepAspectRatio);
+    }
+    m_graffiti = back_ground;
+    update();
 }
 
 void Graffiti_space::mousePressEvent(QMouseEvent *event)
@@ -61,6 +88,7 @@ void Graffiti_space::drawLine(QPoint point)
     image_painter.setPen(pen);
     image_painter.drawLine(m_str_point, point);
     update();
+    emit(clicked());
 }
 
 void Graffiti_space::paintEvent(QPaintEvent *event)

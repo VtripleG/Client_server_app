@@ -72,6 +72,9 @@ void Server::slotReadyRead()
                 case edit_:
                     SendToClient(edit_, row_index, read_string);
                     break;
+                case stream_graffiti_:
+                    SendToClient(stream_graffiti_, NULL, read_string);
+                    break;
                 case delete_socket_:
                 {
                     qDebug() << "Delete user";

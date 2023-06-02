@@ -33,6 +33,7 @@ private:
         image_ = 2,
         delete_ = 3,
         edit_ = 4,
+        stream_graffiti_ = 5,
         delete_socket_ = 9
     };
 public slots:

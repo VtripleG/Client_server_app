@@ -7,6 +7,8 @@
 #include <QImage>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QBuffer>
+#include <QByteArray>
 
 class Graffiti_space : public QWidget
 {
@@ -16,6 +18,8 @@ public:
     void setColor(QColor color);
     QString getImage();
     void clearImage();
+    void setImage(QImage back_ground);
+    void setBackground(QImage back_ground);
 
 private:
     void drawLine(QPoint point);
@@ -32,6 +36,8 @@ private:
 
     QPoint m_str_point;
     QColor m_color = QColor(Qt::red);
+signals:
+    void clicked();
 };
 
 #endif // GRAFFITI_SPACE_H

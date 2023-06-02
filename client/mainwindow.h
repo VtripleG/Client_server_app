@@ -4,7 +4,6 @@
 #include <QVector>
 #include <QMainWindow>
 #include <QStackedWidget>
-#include "Chat.h"
 #include <QCloseEvent>
 #include <QMouseEvent>
 #include <QPaintEvent>
@@ -15,6 +14,8 @@
 #include <QLabel>
 #include <QGraphicsView>
 #include "Graffiti_space.h"
+#include "Chat.h"
+
 
 
 
@@ -37,6 +38,7 @@ public:
     void ReadMassege(QString sender_name, QString read_string, bool image_flag);
     void DeleteMassege(int row_index, QString sender_name);
     void EditMassege(int row_index, QString sender_name, QString read_string);
+    void GetStreamingGraffiti(QString sender_name, QString read_string);
 
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -44,6 +46,7 @@ public slots:
     void slotReadyRead();
     void slotSelectListItem();
     void slotSelectResendMassege();
+    void ImageChanched();
 
 private slots:
     void on_Send_button_clicked();
@@ -72,6 +75,14 @@ private slots:
 
     void on_set_blue_button_clicked();
 
+    void on_setBackGround_clicked();
+
+    void on_view_stream_clicked();
+
+    void on_stream_flag_clicked();
+
+    void on_stream_flag_released();
+
 private:
     Ui::MainWindow *m_ui;
 
@@ -81,6 +92,7 @@ private:
         image_ = 2,
         delete_ = 3,
         edit_ = 4,
+        stream_graffiti_ = 5
     };
 
     QTcpSocket *socket;
@@ -93,10 +105,10 @@ private:
     int massege_flag = 0;
     qint64 size_block;
 
+    bool stream_flag = false;
+
     QVector <QString> sender_names;
+    QVector <QImage> graffitis;
     QVector <Chat> chats;
-
-//    Graffiti_space * m_graffiti_space;
-
 };
 #endif // MAINWINDOW_H
