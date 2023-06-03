@@ -13,11 +13,9 @@
 #include <QFileDialog>
 #include <QLabel>
 #include <QGraphicsView>
+#include <QTimer>
 #include "Graffiti_space.h"
 #include "Chat.h"
-
-
-
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -28,7 +26,6 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-
     void closeEvent(QCloseEvent *event);
 
     void SendToServer(int action_flag, int row_index, QString send_string);
@@ -46,7 +43,7 @@ public slots:
     void slotReadyRead();
     void slotSelectListItem();
     void slotSelectResendMassege();
-    void ImageChanched();
+    void SendStreamingImage();
 
 private slots:
     void on_Send_button_clicked();
@@ -81,8 +78,6 @@ private slots:
 
     void on_stream_flag_clicked();
 
-    void on_stream_flag_released();
-
 private:
     Ui::MainWindow *m_ui;
 
@@ -110,5 +105,7 @@ private:
     QVector <QString> sender_names;
     QVector <QImage> graffitis;
     QVector <Chat> chats;
+
+    QTimer * frame_timer;
 };
 #endif // MAINWINDOW_H

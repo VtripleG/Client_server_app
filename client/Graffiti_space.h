@@ -20,6 +20,7 @@ public:
     void clearImage();
     void setImage(QImage back_ground);
     void setBackground(QImage back_ground);
+    bool graffitiChanched();
 
 private:
     void drawLine(QPoint point);
@@ -31,6 +32,7 @@ private:
 
     QVector <QPoint> m_points_vector;
     bool m_line_flag = false;
+    bool m_graffiti_chanched = false;
 
     QImage m_graffiti = QImage(660, 460, QImage::Format_RGB32);
 

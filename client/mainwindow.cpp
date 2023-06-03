@@ -7,6 +7,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     size_block = 0;
     m_ui->setupUi(this);
+    frame_timer = new QTimer(this);
+    frame_timer->setInterval(40);
     socket = new QTcpSocket(this);
     m_ui->stackedWidget->setCurrentIndex(1);
     connect(m_ui->lineEdit, &QLineEdit::returnPressed, this, &MainWindow::on_Send_button_clicked);
@@ -18,7 +20,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_ui->edit_lineEdit, &QLineEdit::returnPressed, this, &MainWindow::on_send_edit_button_clicked);
     connect(m_ui->chatSpace, &QListWidget::itemDoubleClicked, this, &MainWindow::on_resend_button_clicked);
     connect(m_ui->lineEditUserName, &QLineEdit::returnPressed, this, &MainWindow::on_Connect_button_clicked);
-    connect(m_ui->widget, &Graffiti_space::clicked, this, &MainWindow::ImageChanched);
+//    connect(m_ui->widget, &Graffiti_space::clicked, this, &MainWindow::ImageChanched);
+    connect(frame_timer, SIGNAL(timeout()), this, SLOT(SendStreamingImage()));
     setCentralWidget(m_ui->stackedWidget);
 }
 
@@ -212,18 +215,18 @@ void MainWindow::on_view_stream_clicked()
 
 void MainWindow::on_stream_flag_clicked()
 {
-    stream_flag = true;
-    while(stream_flag = true)
+    if(stream_flag == false)
     {
-        if(stream_flag = false)
-            break;
-        SendToServer(stream_graffiti_, NULL, m_ui->widget->getImage());
+        stream_flag = true;
+        frame_timer->start();
+        qDebug() << "start stream";
     }
-}
-
-void MainWindow::on_stream_flag_released()
-{
-    stream_flag = false;
+    else
+    {
+        stream_flag = false;
+        frame_timer->stop();
+        qDebug() << "stop stream";
+    }
 }
 
 
@@ -478,7 +481,10 @@ void MainWindow::slotSelectResendMassege()
     else{m_ui->resend_button->setEnabled(true);}
 }
 
-void MainWindow::ImageChanched()
+void MainWindow::SendStreamingImage()
 {
-    qDebug() << 1;
+    if(m_ui->widget->graffitiChanched() == true)
+    {
+        SendToServer(stream_graffiti_, NULL, m_ui->widget->getImage());
+    }
 }

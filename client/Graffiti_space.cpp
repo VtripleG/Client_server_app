@@ -14,6 +14,7 @@ void Graffiti_space::setColor(QColor color)
 
 QString Graffiti_space::getImage()
 {
+    m_graffiti_chanched = false;
     QByteArray byte_ar;
     QBuffer cod_buff (&byte_ar);
     m_graffiti.save(&cod_buff, "png");
@@ -56,6 +57,11 @@ void Graffiti_space::setBackground(QImage back_ground)
     update();
 }
 
+bool Graffiti_space::graffitiChanched()
+{
+    return m_graffiti_chanched;
+}
+
 void Graffiti_space::mousePressEvent(QMouseEvent *event)
 {
     m_line_flag = true;
@@ -88,6 +94,7 @@ void Graffiti_space::drawLine(QPoint point)
     image_painter.setPen(pen);
     image_painter.drawLine(m_str_point, point);
     update();
+    m_graffiti_chanched = true;
     emit(clicked());
 }
 
