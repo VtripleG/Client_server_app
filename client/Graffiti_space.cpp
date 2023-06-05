@@ -3,7 +3,6 @@
 Graffiti_space::Graffiti_space(QWidget *parent):
     QWidget(parent)
 {
-    setMouseTracking(true);
     clearImage();
 }
 
@@ -62,8 +61,15 @@ bool Graffiti_space::graffitiChanched()
     return m_graffiti_chanched;
 }
 
+bool Graffiti_space::setMouseTracking(bool switcher)
+{
+    m_tracking_flag = switcher;
+}
+
 void Graffiti_space::mousePressEvent(QMouseEvent *event)
 {
+    if (m_tracking_flag == false)
+        return;
     m_line_flag = true;
     m_str_point = event->pos();
     drawLine(event->pos());

@@ -78,6 +78,8 @@ private slots:
 
     void on_stream_flag_clicked();
 
+    void on_exit_from_graffiti_clicked();
+
 private:
     Ui::MainWindow *m_ui;
 

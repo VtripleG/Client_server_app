@@ -166,6 +166,14 @@ void MainWindow::on_send_image_clicked()
 void MainWindow::on_graffiti_button_clicked()
 {
     m_ui->stackedWidget->setCurrentIndex(2);
+    m_ui->stackedWidget->setCurrentIndex(2);
+    m_ui->set_blue_button->setEnabled(true);
+    m_ui->set_green_button->setEnabled(true);
+    m_ui->set_red_button->setEnabled(true);
+    m_ui->setBackGround->setEnabled(true);
+    m_ui->send_graffiti_button->setEnabled(true);
+    m_ui->stream_flag->setEnabled(true);
+    m_ui->widget->setMouseTracking(true);
 }
 
 void MainWindow::on_send_graffiti_button_clicked()
@@ -206,7 +214,14 @@ void MainWindow::on_setBackGround_clicked()
 void MainWindow::on_view_stream_clicked()
 {
     m_ui->stackedWidget->setCurrentIndex(2);
+    m_ui->set_blue_button->setEnabled(false);
+    m_ui->set_green_button->setEnabled(false);
+    m_ui->set_red_button->setEnabled(false);
+    m_ui->setBackGround->setEnabled(false);
+    m_ui->send_graffiti_button->setEnabled(false);
+    m_ui->stream_flag->setEnabled(false);
     m_ui->widget->setImage(graffitis[m_ui->names_list->currentRow()]);
+    m_ui->widget->setMouseTracking(false);
 }
 
 void MainWindow::on_stream_flag_clicked()
@@ -488,3 +503,13 @@ void MainWindow::SendStreamingImage()
         SendToServer(stream_graffiti_, NULL, m_ui->widget->getImage());
     }
 }
+
+void MainWindow::on_exit_from_graffiti_clicked()
+{
+    m_ui->stream_flag->setChecked(false);
+    frame_timer->stop();
+    m_ui->widget->clearImage();
+    m_ui->stackedWidget->setCurrentIndex(0);
+
+}
+

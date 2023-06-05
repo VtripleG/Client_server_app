@@ -384,6 +384,13 @@
            </spacer>
           </item>
           <item>
+           <widget class="QPushButton" name="exit_from_graffiti">
+            <property name="text">
+             <string>Exit</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="send_graffiti_button">
             <property name="text">
              <string>Send</string>
