@@ -39,7 +39,7 @@ void Graffiti_space::setImage(QImage back_ground)
         back_ground = back_ground.scaled(QSize((back_ground.width()/(back_ground.height()/460)), 460), Qt::KeepAspectRatio);
     }
     m_graffiti = back_ground;
-    update();
+    repaint();
 }
 
 void Graffiti_space::setBackground(QImage back_ground)

@@ -204,13 +204,7 @@ void MainWindow::on_setBackGround_clicked()
 void MainWindow::on_view_stream_clicked()
 {
     m_ui->stackedWidget->setCurrentIndex(2);
-    stream_flag = true;
-    while(stream_flag = true)
-    {
-        if(stream_flag = false)
-            break;
-        m_ui->widget->setImage(graffitis[m_ui->names_list->currentRow()]);
-    }
+    m_ui->widget->setImage(graffitis[m_ui->names_list->currentRow()]);
 }
 
 void MainWindow::on_stream_flag_clicked()
@@ -403,6 +397,8 @@ void MainWindow::GetStreamingGraffiti(QString sender_name, QString read_string)
             if(sender_name == chats[i].getSecomdName())
             {
                 graffitis[i] = image;
+                if(m_ui->stackedWidget->currentIndex() == 2 && m_ui->names_list->currentRow() == i)
+                    m_ui->widget->setImage(graffitis[m_ui->names_list->currentRow()]);
             }
         }
     }
