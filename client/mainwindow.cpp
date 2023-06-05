@@ -49,6 +49,8 @@ void MainWindow::on_Connect_button_clicked()
 
 void MainWindow::on_Select_button_clicked()
 {
+    QImage graffiti = QImage(660, 460, QImage::Format_RGB32);
+    graffiti.fill(qRgb(0, 0, 0));
     geter_name = m_ui->lineEditSelect->text();
     if(!sender_names.isEmpty())
     {
@@ -63,7 +65,7 @@ void MainWindow::on_Select_button_clicked()
             sender_names.push_back(geter_name);
             m_ui->names_list->addItem(geter_name);
             chats.push_back(Chat(self_name, geter_name));
-            graffitis.push_back(QImage());
+            graffitis.push_back(graffiti);
             m_ui->names_list->setCurrentRow(chats.size()-1);
             SendOnChatSpace(chats[m_ui->names_list->currentRow()].getMasseges());
         }
@@ -73,7 +75,7 @@ void MainWindow::on_Select_button_clicked()
         sender_names.push_back(geter_name);
         m_ui->names_list->addItem(geter_name);
         chats.push_back(Chat(self_name, geter_name));
-        graffitis.push_back(QImage());
+        graffitis.push_back(graffiti);
         m_ui->names_list->setCurrentRow(chats.size()-1);
         SendOnChatSpace(chats[m_ui->names_list->currentRow()].getMasseges());
     }
@@ -309,6 +311,8 @@ QLabel *MainWindow::PrintImage(QString string)
 
 void MainWindow::ReadMassege(QString sender_name, QString read_string, bool image_flag)
 {
+    QImage graffiti = QImage(660, 460, QImage::Format_RGB32);
+    graffiti.fill(qRgb(0, 0, 0));
     if(!sender_names.isEmpty())
     {
         bool flag = false;
@@ -322,7 +326,7 @@ void MainWindow::ReadMassege(QString sender_name, QString read_string, bool imag
             sender_names.push_back(sender_name);
             m_ui->names_list->addItem(sender_name);
             chats.push_back(Chat(self_name, sender_name));
-            graffitis.push_back(QImage());
+            graffitis.push_back(graffiti);
             chats[chats.size()-1].addMassege(sender_name, read_string, image_flag);
         }
         else
@@ -343,7 +347,7 @@ void MainWindow::ReadMassege(QString sender_name, QString read_string, bool imag
         sender_names.push_back(sender_name);
         m_ui->names_list->addItem(sender_name);
         chats.push_back(Chat(self_name, sender_name));
-        graffitis.push_back(QImage());
+        graffitis.push_back(graffiti);
         chats[chats.size()-1].addMassege(sender_name, read_string, image_flag);
     }
 }
