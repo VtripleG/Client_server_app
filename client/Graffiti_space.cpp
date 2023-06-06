@@ -54,6 +54,7 @@ void Graffiti_space::setBackground(QImage back_ground)
     }
     m_graffiti = back_ground;
     update();
+    m_graffiti_chanched = true;
 }
 
 bool Graffiti_space::graffitiChanched()
@@ -101,7 +102,6 @@ void Graffiti_space::drawLine(QPoint point)
     image_painter.drawLine(m_str_point, point);
     update();
     m_graffiti_chanched = true;
-    emit(clicked());
 }
 
 void Graffiti_space::paintEvent(QPaintEvent *event)

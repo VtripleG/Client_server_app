@@ -44,6 +44,7 @@ public slots:
     void slotSelectListItem();
     void slotSelectResendMassege();
     void SendStreamingImage();
+    void slotActiveButtons();
 
 private slots:
     void on_Send_button_clicked();

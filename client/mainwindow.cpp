@@ -20,9 +20,13 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_ui->edit_lineEdit, &QLineEdit::returnPressed, this, &MainWindow::on_send_edit_button_clicked);
     connect(m_ui->chatSpace, &QListWidget::itemDoubleClicked, this, &MainWindow::on_resend_button_clicked);
     connect(m_ui->lineEditUserName, &QLineEdit::returnPressed, this, &MainWindow::on_Connect_button_clicked);
-//    connect(m_ui->widget, &Graffiti_space::clicked, this, &MainWindow::ImageChanched);
     connect(frame_timer, SIGNAL(timeout()), this, SLOT(SendStreamingImage()));
+    connect(m_ui->names_list, &QListWidget::currentRowChanged, this, &MainWindow::slotActiveButtons);
     setCentralWidget(m_ui->stackedWidget);
+    m_ui->Send_button->setEnabled(false);
+    m_ui->send_image->setEnabled(false);
+    m_ui->graffiti_button->setEnabled(false);
+    m_ui->view_stream->setEnabled(false);
 }
 
 MainWindow::~MainWindow()
@@ -238,6 +242,15 @@ void MainWindow::on_stream_flag_clicked()
         frame_timer->stop();
         qDebug() << "stop stream";
     }
+}
+
+void MainWindow::on_exit_from_graffiti_clicked()
+{
+    m_ui->stream_flag->setChecked(false);
+    frame_timer->stop();
+    m_ui->widget->clearImage();
+    m_ui->stackedWidget->setCurrentIndex(0);
+
 }
 
 
@@ -504,12 +517,12 @@ void MainWindow::SendStreamingImage()
     }
 }
 
-void MainWindow::on_exit_from_graffiti_clicked()
+void MainWindow::slotActiveButtons()
 {
-    m_ui->stream_flag->setChecked(false);
-    frame_timer->stop();
-    m_ui->widget->clearImage();
-    m_ui->stackedWidget->setCurrentIndex(0);
-
+    m_ui->Send_button->setEnabled(true);
+    m_ui->send_image->setEnabled(true);
+    m_ui->graffiti_button->setEnabled(true);
+    m_ui->view_stream->setEnabled(true);
 }
+
 
