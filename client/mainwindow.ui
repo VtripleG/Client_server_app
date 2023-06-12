@@ -21,7 +21,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page">
        <widget class="QPushButton" name="Select_button">
@@ -78,7 +78,7 @@
           <x>210</x>
           <y>60</y>
           <width>571</width>
-          <height>401</height>
+          <height>441</height>
          </rect>
         </property>
         <property name="verticalScrollBarPolicy">
@@ -98,9 +98,9 @@
         <property name="geometry">
          <rect>
           <x>210</x>
-          <y>470</y>
+          <y>500</y>
           <width>571</width>
-          <height>61</height>
+          <height>41</height>
          </rect>
         </property>
         <property name="sizePolicy">
@@ -151,9 +151,9 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
+            <y>10</y>
             <width>571</width>
-            <height>80</height>
+            <height>31</height>
            </rect>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -184,9 +184,9 @@
        <widget class="QPushButton" name="send_image">
         <property name="geometry">
          <rect>
-          <x>700</x>
+          <x>689</x>
           <y>30</y>
-          <width>80</width>
+          <width>91</width>
           <height>25</height>
          </rect>
         </property>
