@@ -61,10 +61,10 @@ void Server::slotReadyRead()
                 switch (action_flag)
                 {
                 case text_:
-                    SendToClient(text_, NULL, read_string);
+                    SendToClient(text_, zero, read_string);
                     break;
                 case image_:
-                    SendToClient(image_, NULL, read_string);
+                    SendToClient(image_, zero, read_string);
                     break;
                 case delete_:
                     SendToClient(delete_, row_index, nullptr);
@@ -73,7 +73,7 @@ void Server::slotReadyRead()
                     SendToClient(edit_, row_index, read_string);
                     break;
                 case stream_graffiti_:
-                    SendToClient(stream_graffiti_, NULL, read_string);
+                    SendToClient(stream_graffiti_, zero, read_string);
                     break;
                 case delete_socket_:
                 {

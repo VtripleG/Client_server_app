@@ -92,7 +92,7 @@ void MainWindow::on_Send_button_clicked()
 {
     if(m_ui->lineEdit->text() != "\0")
     {
-        SendToServer(text_, NULL, m_ui->lineEdit->text());
+        SendToServer(text_, zero, m_ui->lineEdit->text());
         chats[m_ui->names_list->currentRow()].addMassege(self_name, m_ui->lineEdit->text(), false);
         SendOnChatSpace(chats[m_ui->names_list->currentRow()].getMasseges());
     }
@@ -105,12 +105,12 @@ void MainWindow::on_resend_button_clicked()
     row_index = m_ui->chatSpace->currentRow();
     if(!chats[m_ui->names_list->currentRow()].getMasseges()[row_index].getImageFlag())
     {
-        SendToServer(text_, NULL, chats[m_ui->names_list->currentRow()].resendMassege(row_index));
+        SendToServer(text_, zero, chats[m_ui->names_list->currentRow()].resendMassege(row_index));
         chats[m_ui->names_list->currentRow()].addMassege(self_name, chats[m_ui->names_list->currentRow()].resendMassege(row_index), false);
     }
     else
     {
-        SendToServer(image_, NULL, qCompress(chats[m_ui->names_list->currentRow()].getMasseges()[row_index].getText().toLocal8Bit(), 9).toBase64());
+        SendToServer(image_, zero, qCompress(chats[m_ui->names_list->currentRow()].getMasseges()[row_index].getText().toLocal8Bit(), 9).toBase64());
         chats[m_ui->names_list->currentRow()].addMassege(self_name, chats[m_ui->names_list->currentRow()].getMasseges()[row_index].getText(), true);
     }
     SendOnChatSpace(chats[m_ui->names_list->currentRow()].getMasseges());
@@ -163,7 +163,7 @@ void MainWindow::on_send_image_clicked()
     QString string = byte_ar.toBase64();
     chats[m_ui->names_list->currentRow()].addMassege(self_name, string, true);
     string = QString(qCompress(string.toLocal8Bit(), 9).toBase64());
-    SendToServer(image_, NULL, string);
+    SendToServer(image_, zero, string);
     SendOnChatSpace(chats[m_ui->names_list->currentRow()].getMasseges());
 }
 
@@ -186,7 +186,7 @@ void MainWindow::on_send_graffiti_button_clicked()
     QString string = m_ui->widget->getImage();
     chats[m_ui->names_list->currentRow()].addMassege(self_name, string, true);
     string = QString(qCompress(string.toLocal8Bit(), 9).toBase64());
-    SendToServer(image_, NULL, string);
+    SendToServer(image_, zero, string);
     SendOnChatSpace(chats[m_ui->names_list->currentRow()].getMasseges());
     m_ui->widget->clearImage();
     m_ui->stackedWidget->setCurrentIndex(0);
@@ -256,7 +256,7 @@ void MainWindow::on_exit_from_graffiti_clicked()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    SendToServer(9, NULL, nullptr);
+    SendToServer(9, zero, nullptr);
 }
 
 
@@ -279,11 +279,12 @@ void MainWindow::SendOnChatSpace(QList <Massege> massege)
         auto add_item = new QListWidgetItem;
         if (item.getName() == self_name)
         {
-            add_item->setTextAlignment(Qt::AlignRight);
             if(item.getImageFlag() == false)
             {
-                add_item->setText(item.getText());
+                auto label = PrintText(item.getText());
+                label->setAlignment(Qt::AlignRight);
                 m_ui->chatSpace->addItem(add_item);
+                m_ui->chatSpace->setItemWidget(add_item, label);
             }
             else
             {
@@ -292,18 +293,16 @@ void MainWindow::SendOnChatSpace(QList <Massege> massege)
                 m_ui->chatSpace->addItem(add_item);
                 add_item->setSizeHint(QSize(label->pixmap().width(), label->pixmap().height()+10));
                 m_ui->chatSpace->setItemWidget(add_item, label);
-                qDebug() << label->width() << " " << label->height();
-                qDebug() << label->pixmap().height();
-                qDebug() << add_item->sizeHint();
             }
         }
         else
         {
-            add_item->setTextAlignment(Qt::AlignLeft);
             if(item.getImageFlag() == false)
             {
-                add_item->setText(item.getText());
+                auto label = PrintText(item.getText());
+                label->setAlignment(Qt::AlignLeft);
                 m_ui->chatSpace->addItem(add_item);
+                m_ui->chatSpace->setItemWidget(add_item, label);
             }
             else
             {
@@ -312,9 +311,6 @@ void MainWindow::SendOnChatSpace(QList <Massege> massege)
                 m_ui->chatSpace->addItem(add_item);
                 add_item->setSizeHint(QSize(label->pixmap().width(), label->pixmap().height()+10));
                 m_ui->chatSpace->setItemWidget(add_item, label);
-                qDebug() << label->width() << " " << label->height();
-                qDebug() << label->pixmap().height();
-                qDebug() << add_item->sizeHint();
             }
         }
     }
@@ -333,8 +329,14 @@ QLabel *MainWindow::PrintImage(QString string)
     else
         label->setPixmap(QPixmap::fromImage(image).scaled(image.width()/(image.width()/300), image.height()/(image.width()/300), Qt::KeepAspectRatio));
     label->setMask(QPixmap::fromImage(image).mask());
-    return label;
+    return label;    
+}
 
+QLabel *MainWindow::PrintText(QString string)
+{
+    auto label = new QLabel(this);
+    label->setText(string);
+    return label;
 }
 
 void MainWindow::ReadMassege(QString sender_name, QString read_string, bool image_flag)
@@ -513,7 +515,7 @@ void MainWindow::SendStreamingImage()
 {
     if(m_ui->widget->graffitiChanched() == true)
     {
-        SendToServer(stream_graffiti_, NULL, m_ui->widget->getImage());
+        SendToServer(stream_graffiti_, zero, m_ui->widget->getImage());
     }
 }
 

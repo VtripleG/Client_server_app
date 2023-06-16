@@ -31,6 +31,8 @@ public:
     void SendToServer(int action_flag, int row_index, QString send_string);
     void SendOnChatSpace(QList <Massege> massege);
     QLabel * PrintImage(QString string);
+    QLabel * PrintText(QString string);
+
 
     void ReadMassege(QString sender_name, QString read_string, bool image_flag);
     void DeleteMassege(int row_index, QString sender_name);
@@ -100,6 +102,7 @@ private:
 
     QByteArray Data;
 
+    const int zero = 0;
     int massege_flag = 0;
     qint64 size_block;
 

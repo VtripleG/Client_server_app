@@ -23,6 +23,7 @@ private:
     QVector <User> users;
     User sender_user;
     QString end_adress;
+    const int zero = 0;
     int massege_flag = 0;
     int auth_flag;
     qint64 size_block;
