@@ -384,7 +384,6 @@ void MainWindow::ReadMassege(QString sender_name, QString read_string, bool imag
 
 void MainWindow::DeleteMassege(int row_index, QString sender_name)
 {
-    qDebug() << row_index;
     if(!sender_names.isEmpty())
     {
         for(int i = 0; i < sender_names.size(); i++)

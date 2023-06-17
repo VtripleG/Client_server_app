@@ -4,6 +4,7 @@
 #include <QTcpSocket>
 #include <QVector>
 #include "User.h"
+#include "databasecontroller.h"
 
 
 class Server: public QTcpServer

@@ -21,7 +21,7 @@ public:
     void setImage(QImage back_ground);
     void setBackground(QImage back_ground);
     bool graffitiChanched();
-    bool setMouseTracking(bool switcher);
+    void setMouseTracking(bool switcher);
 
 private:
     void drawLine(QPoint point);

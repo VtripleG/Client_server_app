@@ -62,7 +62,7 @@ bool Graffiti_space::graffitiChanched()
     return m_graffiti_chanched;
 }
 
-bool Graffiti_space::setMouseTracking(bool switcher)
+void Graffiti_space::setMouseTracking(bool switcher)
 {
     m_tracking_flag = switcher;
 }

@@ -12,6 +12,7 @@ Server::Server(qint16 port)
     {
         qDebug() << "Error while launching";
     }
+    DataBaseController dataBase;
 }
 
 void Server::incomingConnection(qintptr socketDescriptor)
