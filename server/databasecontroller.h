@@ -5,13 +5,16 @@
 #include <QSqlDriver>
 #include <QSqlError>
 #include <QSqlTableModel>
+#include <QSqlQuery>
 
 class DataBaseController
 {
 public:
     DataBaseController();
+    void InsertUser(QString user_name);
 private:
     QSqlDatabase dataBase;
+    QSqlQuery * query;
     QSqlTableModel * userTable;
     QSqlTableModel * chatTable;
 };
