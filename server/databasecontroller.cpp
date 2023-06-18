@@ -15,11 +15,9 @@ DataBaseController::DataBaseController()
 void DataBaseController::InsertUser(QString user_name)
 {
     query->prepare("INSERT INTO user (name) "
-              "VALUES ('John')");
-//    query->bindValue(":name", "John");
-    qDebug() <<  query->exec();
-//    query->bindValue(":name", "Nik");
-//    query->exec();
-//    query->bindValue(":name", "Ted");
-//    query->exec();
+              "VALUES (:name)");
+    query->bindValue(":name", user_name);
+    query->exec();
+    qDebug() << "DB error: " << query->lastError();
+    query->clear();
 }
