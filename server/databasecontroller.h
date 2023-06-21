@@ -11,8 +11,9 @@ class DataBaseController
 {
 public:
     DataBaseController();
-    void InsertUser(QString user_name);
-    void InsertChat(int id_user1, int id_user2, QString path);
+    void InsertUser(QString username, QString password);
+    void InsertChat(QString username1, QString username2);
+    QString GetPath (QString username1, QString username2);
 private:
     QSqlDatabase dataBase;
     QSqlQuery * query;

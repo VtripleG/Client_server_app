@@ -8,26 +8,51 @@ DataBaseController::DataBaseController()
     {
         qDebug() << "Sucsessful connect to db";
         query =  new QSqlQuery(dataBase);
+//        InsertUser("Joe", "1111");
+//        InsertUser("Loh", "2222");
+//        InsertChat("Joe", "Loh");
+        GetPath("Loh", "Joe");
     }
+    else
+    {
+        qDebug() << "Unsucsessful connect to db";
+    }
+
 }
 
-void DataBaseController::InsertUser(QString user_name)
+void DataBaseController::InsertUser(QString username, QString password)
 {
-    query->prepare("INSERT INTO user (name) "
-              "VALUES (:name)");
-    query->bindValue(":name", user_name);
+    query->prepare("INSERT INTO user (username, password, online) "
+              "VALUES (:username, :password, :online)");
+    query->bindValue(":username", username);
+    query->bindValue(":password", password);
+    query->bindValue(":online", 1);
     query->exec();
     qDebug() << "DB error: " << query->lastError();
     query->clear();
 }
 
-void DataBaseController::InsertChat(int id_user1, int id_user2, QString path)
+void DataBaseController::InsertChat(QString username1, QString username2)
 {
-    query->prepare("INSERT INTO chat (id_user1, id_user2, masseges_path) VALUES (:id_user1, :id_user2, :masseges_path)");
-    query->bindValue(":id_user1", id_user1);
-    query->bindValue(":id_user2", id_user2);
+    QString path = username1 + username2 + ".json";
+    query->prepare("INSERT INTO chat (username1, username2, masseges_path) VALUES (:username1, :username2, :masseges_path)");
+    query->bindValue(":username1", username1);
+    query->bindValue(":username2", username2);
     query->bindValue("masseges_path", path);
     query->exec();
     qDebug() << "DB error: " << query->lastError();
     query->clear();
+}
+
+QString DataBaseController::GetPath(QString username1, QString username2)
+{
+
+    query->prepare("SELECT masseges_path FROM chat WHERE (username1 = :username1 AND username2 = :username2) OR (username2 = :username1 AND username1 = :username2)");
+    query->bindValue(":username1", username1);
+    query->bindValue(":username2", username2);
+    query->exec();
+    qDebug() << query->value(0).toString();
+    qDebug() << "DB error: " << query->lastError();
+    query->clear();
+    return query->value(0).toString();
 }
