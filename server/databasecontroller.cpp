@@ -8,10 +8,6 @@ DataBaseController::DataBaseController()
     {
         qDebug() << "Sucsessful connect to db";
         query =  new QSqlQuery(dataBase);
-//        InsertUser("Joe", "1111");
-//        InsertUser("Loh", "2222");
-//        InsertChat("Joe", "Loh");
-        GetPath("Loh", "Joe");
     }
     else
     {
@@ -38,7 +34,7 @@ void DataBaseController::InsertChat(QString username1, QString username2)
     query->prepare("INSERT INTO chat (username1, username2, masseges_path) VALUES (:username1, :username2, :masseges_path)");
     query->bindValue(":username1", username1);
     query->bindValue(":username2", username2);
-    query->bindValue("masseges_path", path);
+    query->bindValue(":masseges_path", path);
     query->exec();
     qDebug() << "DB error: " << query->lastError();
     query->clear();
@@ -46,13 +42,18 @@ void DataBaseController::InsertChat(QString username1, QString username2)
 
 QString DataBaseController::GetPath(QString username1, QString username2)
 {
-
-    query->prepare("SELECT masseges_path FROM chat WHERE (username1 = :username1 AND username2 = :username2) OR (username2 = :username1 AND username1 = :username2)");
-    query->bindValue(":username1", username1);
+    QString path;
+    query->prepare("SELECT masseges_path FROM chat WHERE username1 = :username1 AND username2 = :username2 OR username1 = :username2 AND username2 = :username1");
+    query->bindValue(":username1",username1);
     query->bindValue(":username2", username2);
-    query->exec();
-    qDebug() << query->value(0).toString();
+    if(query->exec())
+    {
+        while(query->next())
+        {
+            path = query->value(0).toString();
+        }
+    }
     qDebug() << "DB error: " << query->lastError();
     query->clear();
-    return query->value(0).toString();
+    return path;
 }
