@@ -92,7 +92,9 @@ private:
         image_ = 2,
         delete_ = 3,
         edit_ = 4,
-        stream_graffiti_ = 5
+        stream_graffiti_ = 5,
+        login_ = 8,
+        exit_ = 9
     };
 
     QTcpSocket *socket;

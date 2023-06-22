@@ -23,6 +23,7 @@ private:
     QVector <QTcpSocket*> sockets;
     QVector <User> users;
     User sender_user;
+    DataBaseController dataBase;
     QString end_adress;
     const int zero = 0;
     int massege_flag = 0;
@@ -36,11 +37,11 @@ private:
         delete_ = 3,
         edit_ = 4,
         stream_graffiti_ = 5,
-        delete_socket_ = 9
+        login_ = 8,
+        exit_ = 9
     };
 public slots:
     void slodDeleteSocket();
-    void slotAutorisation();
     void incomingConnection(qintptr socketDescriptor);
     void slotReadyRead();
 

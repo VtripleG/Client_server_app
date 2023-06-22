@@ -8,15 +8,11 @@ DataBaseController::DataBaseController()
     {
         qDebug() << "Sucsessful connect to db";
         query =  new QSqlQuery(dataBase);
-        SetOnline("Joe");
-        qDebug() << GetOnlineStatus("Joe");
-        qDebug() << GetOnlineStatus("Loh");
     }
     else
     {
         qDebug() << "Unsucsessful connect to db";
     }
-
 }
 
 void DataBaseController::InsertUser(QString username, QString password)
@@ -97,4 +93,21 @@ void DataBaseController::SetOffline(QString username)
     query->exec();
     qDebug() << "DB error: " << query->lastError();
     query->clear();
+}
+
+bool DataBaseController::Authorization(QString username, QString password)
+{
+    bool sucsess = false;
+    query->prepare("SELECT password FROM user WHERE username = :username");
+    query->bindValue(":username", username);
+    if(query->exec())
+    {
+        while(query->next())
+        {
+            if(password == query->value(0).toString())
+                sucsess = true;
+        }
+    }
+    query->clear();
+    return sucsess;
 }

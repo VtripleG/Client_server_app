@@ -4,7 +4,6 @@
 #include <QSqlDatabase>
 #include <QSqlDriver>
 #include <QSqlError>
-#include <QSqlTableModel>
 #include <QSqlQuery>
 
 class DataBaseController
@@ -19,11 +18,11 @@ public:
 
     void SetOnline(QString username);
     void SetOffline(QString username);
+
+    bool Authorization(QString username, QString password);
 private:
     QSqlDatabase dataBase;
     QSqlQuery * query;
-    QSqlTableModel * userTable;
-    QSqlTableModel * chatTable;
 };
 
 #endif // DATABASECONTROLLER_H

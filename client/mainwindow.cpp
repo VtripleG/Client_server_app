@@ -44,11 +44,13 @@ void MainWindow::on_Connect_button_clicked()
     out.setVersion(QDataStream::Qt_6_4);
     self_name = m_ui->lineEditUserName->text();
     m_ui->lineEditUserName->clearFocus();
-    out << self_name;
+    out << qint64(0) << login_ << self_name << m_ui->lineEditPassword->text();
+    out.device()->seek(0);
+    out << qint64(Data.size() - sizeof(qint64));
     socket->write(Data);
-    m_ui->UserNameLabel->setText(self_name);
-    m_ui->stackedWidget->setCurrentIndex(0);
-    m_ui->stackedWidget_2->setCurrentIndex(0);
+//    m_ui->UserNameLabel->setText(self_name);
+//    m_ui->stackedWidget->setCurrentIndex(0);
+//    m_ui->stackedWidget_2->setCurrentIndex(0);
 }
 
 void MainWindow::on_Select_button_clicked()
