@@ -19,6 +19,8 @@ public:
 
     void SetOnline(QString username);
     void SetOffline(QString username);
+    
+    void Dele
 private:
     QSqlDatabase dataBase;
     QSqlQuery * query;

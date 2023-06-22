@@ -8,6 +8,9 @@ DataBaseController::DataBaseController()
     {
         qDebug() << "Sucsessful connect to db";
         query =  new QSqlQuery(dataBase);
+        SetOnline("Joe");
+        qDebug() << GetOnlineStatus("Joe");
+        qDebug() << GetOnlineStatus("Loh");
     }
     else
     {
@@ -56,4 +59,42 @@ QString DataBaseController::GetPath(QString username1, QString username2)
     qDebug() << "DB error: " << query->lastError();
     query->clear();
     return path;
+}
+
+bool DataBaseController::GetOnlineStatus(QString username)
+{
+    bool online;
+    query->prepare("SELECT online FROM user WHERE username = :username");
+    query->bindValue(":username", username);
+    if(query->exec())
+    {
+        while(query->next())
+        {
+            int flag = query->value(0).toInt();
+            if(flag == 1)
+                online = true;
+            else
+                online = false;
+        }
+    }
+    query->clear();
+    return online;
+}
+
+void DataBaseController::SetOnline(QString username)
+{
+    query->prepare("UPDATE user SET online = 1 WHERE username = :username");
+    query->bindValue(":username", username);
+    query->exec();
+    qDebug() << "DB error: " << query->lastError();
+    query->clear();
+}
+
+void DataBaseController::SetOffline(QString username)
+{
+    query->prepare("UPDATE user SET online = 0 WHERE username = :username");
+    query->bindValue(":username", username);
+    query->exec();
+    qDebug() << "DB error: " << query->lastError();
+    query->clear();
 }
