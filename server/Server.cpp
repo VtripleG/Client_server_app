@@ -55,6 +55,7 @@ void Server::slotReadyRead()
             {
                 in >> end_adress >> read_string >> row_index;
                 SendToClient(text_, zero, read_string);
+                InsertMassegeInFile(dataBase.GetPath(end_adress, sender_user.Name), read_string);
             }
                 break;
             case image_:
@@ -92,9 +93,13 @@ void Server::slotReadyRead()
                     qDebug() << "Sucsessful login";
                     users.push_back(User(username, socket));
                     dataBase.SetOnline(username);
+                    SendSistemMassege(suc_login_);
                 }
                 else
+                {
                     qDebug() << "Unsucsessfull login";
+                    SendSistemMassege(unsuc_login_);
+                }
                 break;
             }
             case exit_:
@@ -147,6 +152,37 @@ void Server::SendToClient(int action_flag, int row_index, QString send_string)
         if(end_adress == users[i].Name)
             users[i].Socket->write(Data);
     }
+}
+
+void Server::SendSistemMassege(int action_flag)
+{
+    Data.clear();
+    for(const auto &item: users)
+    {
+        if(item.Socket == socket)
+            sender_user = item;
+    }
+    QDataStream out(&Data, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_6_4);
+    out << qint64(0) << action_flag;
+    out.device()->seek(0);
+    out << qint64(Data.size() - sizeof(qint64));
+    sender_user.Socket->write(Data);
+}
+
+void Server::InsertMassegeInFile(QString file_name, QString massege)
+{
+    QString path = default_path + file_name;
+}
+
+void Server::DeleteMassegeInFile(QString file_name)
+{
+
+}
+
+void Server::EditMassegeInFile(QString file_name)
+{
+
 }
 
 void Server::slodDeleteSocket()

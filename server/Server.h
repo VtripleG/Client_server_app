@@ -15,9 +15,13 @@ public:
 private:
     QByteArray Data;
     void SendToClient(int action_flag, int row_index, QString send_string);
+    void SendSistemMassege(int action_flag);
     void SendImageToClient(QString send_string);
     void SendEditToClient(int row_index, QString send_string);
     void SendDeleteToClient(int row_index);
+    void InsertMassegeInFile(QString file_name, QString massege);
+    void DeleteMassegeInFile(QString file_name);
+    void EditMassegeInFile(QString file_name);
 
     QTcpSocket *socket;
     QVector <QTcpSocket*> sockets;
@@ -25,6 +29,7 @@ private:
     User sender_user;
     DataBaseController dataBase;
     QString end_adress;
+    QString default_path = "/home/sergey/qt_projects/client_server/server/data";
     const int zero = 0;
     int massege_flag = 0;
     int auth_flag;
@@ -38,7 +43,10 @@ private:
         edit_ = 4,
         stream_graffiti_ = 5,
         login_ = 8,
-        exit_ = 9
+        exit_ = 9,
+        suc_login_ = 11,
+        unsuc_login_ = 12,
+        history_ = 13
     };
 public slots:
     void slodDeleteSocket();

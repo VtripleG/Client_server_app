@@ -14,6 +14,7 @@
 #include <QLabel>
 #include <QGraphicsView>
 #include <QTimer>
+#include <QMessageBox>
 #include "Graffiti_space.h"
 #include "Chat.h"
 
@@ -34,9 +35,9 @@ public:
     QLabel * PrintText(QString string);
 
 
-    void ReadMassege(QString sender_name, QString read_string, bool image_flag);
-    void DeleteMassege(int row_index, QString sender_name);
-    void EditMassege(int row_index, QString sender_name, QString read_string);
+    void ReadMessege(QString sender_name, QString read_string, bool image_flag);
+    void DeleteMessege(int row_index, QString sender_name);
+    void EditMessege(int row_index, QString sender_name, QString read_string);
     void GetStreamingGraffiti(QString sender_name, QString read_string);
 
     MainWindow(QWidget *parent = nullptr);
@@ -44,7 +45,7 @@ public:
 public slots:
     void slotReadyRead();
     void slotSelectListItem();
-    void slotSelectResendMassege();
+    void slotSelectResendMessege();
     void SendStreamingImage();
     void slotActiveButtons();
 
@@ -94,7 +95,10 @@ private:
         edit_ = 4,
         stream_graffiti_ = 5,
         login_ = 8,
-        exit_ = 9
+        exit_ = 9,
+        suc_login_ = 11,
+        unsuc_login_ = 12,
+        history_ = 13
     };
 
     QTcpSocket *socket;

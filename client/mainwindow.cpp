@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(socket, &QTcpSocket::readyRead, this, &MainWindow::slotReadyRead);
     connect(socket, &QTcpSocket::disconnected, socket, &QTcpSocket::deleteLater);
     connect(m_ui->names_list, &QListWidget::itemClicked, this, &MainWindow::slotSelectListItem);
-    connect(m_ui->chatSpace, &QListWidget::itemClicked, this, &MainWindow::slotSelectResendMassege);
+    connect(m_ui->chatSpace, &QListWidget::itemClicked, this, &MainWindow::slotSelectResendMessege);
     connect(m_ui->edit_lineEdit, &QLineEdit::returnPressed, this, &MainWindow::on_send_edit_button_clicked);
     connect(m_ui->chatSpace, &QListWidget::itemDoubleClicked, this, &MainWindow::on_resend_button_clicked);
     connect(m_ui->lineEditUserName, &QLineEdit::returnPressed, this, &MainWindow::on_Connect_button_clicked);
@@ -48,9 +48,6 @@ void MainWindow::on_Connect_button_clicked()
     out.device()->seek(0);
     out << qint64(Data.size() - sizeof(qint64));
     socket->write(Data);
-//    m_ui->UserNameLabel->setText(self_name);
-//    m_ui->stackedWidget->setCurrentIndex(0);
-//    m_ui->stackedWidget_2->setCurrentIndex(0);
 }
 
 void MainWindow::on_Select_button_clicked()
@@ -341,7 +338,7 @@ QLabel *MainWindow::PrintText(QString string)
     return label;
 }
 
-void MainWindow::ReadMassege(QString sender_name, QString read_string, bool image_flag)
+void MainWindow::ReadMessege(QString sender_name, QString read_string, bool image_flag)
 {
     QImage graffiti = QImage(660, 460, QImage::Format_RGB32);
     graffiti.fill(qRgb(0, 0, 0));
@@ -384,7 +381,7 @@ void MainWindow::ReadMassege(QString sender_name, QString read_string, bool imag
     }
 }
 
-void MainWindow::DeleteMassege(int row_index, QString sender_name)
+void MainWindow::DeleteMessege(int row_index, QString sender_name)
 {
     if(!sender_names.isEmpty())
     {
@@ -400,7 +397,7 @@ void MainWindow::DeleteMassege(int row_index, QString sender_name)
     }
 }
 
-void MainWindow::EditMassege(int row_index, QString sender_name, QString read_string)
+void MainWindow::EditMessege(int row_index, QString sender_name, QString read_string)
 {
     if(!sender_names.isEmpty())
     {
@@ -468,23 +465,37 @@ void MainWindow::slotReadyRead()
             switch (action_flag)
             {
             case text_:
-                ReadMassege(sender_name, read_string, false);
+                ReadMessege(sender_name, read_string, false);
                 break;
             case image_:
             {
                 read_string = QString(qUncompress(QByteArray::fromBase64(read_string.toLocal8Bit())));
-                ReadMassege(sender_name, read_string, true);
+                ReadMessege(sender_name, read_string, true);
                 break;
             }
             case delete_:
-                DeleteMassege(row_index, sender_name);
+                DeleteMessege(row_index, sender_name);
                 break;
             case edit_:
-                EditMassege(row_index, sender_name, read_string);
+                EditMessege(row_index, sender_name, read_string);
                 break;
             case stream_graffiti_:
                 GetStreamingGraffiti(sender_name, read_string);
                 break;
+            case suc_login_:
+            {
+                m_ui->UserNameLabel->setText(self_name);
+                m_ui->stackedWidget->setCurrentIndex(0);
+                m_ui->stackedWidget_2->setCurrentIndex(0);
+                break;
+            }
+            case unsuc_login_:
+            {
+                QMessageBox::warning(this, "Unsucsessfull login", "Invalid username or password\nTry again");
+                m_ui->lineEditPassword->clear();
+                m_ui->lineEditUserName->clear();
+                break;
+            }
             default:
                 break;
             }
@@ -501,7 +512,7 @@ void MainWindow::slotSelectListItem()
     SendOnChatSpace(chats[m_ui->names_list->currentRow()].getMasseges());
 }
 
-void MainWindow::slotSelectResendMassege()
+void MainWindow::slotSelectResendMessege()
 {
     if(chats[m_ui->names_list->currentRow()].getMasseges()[m_ui->chatSpace->currentRow()].getName() == self_name)
     {
